@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using WebApplication1.Infrastructure;
@@ -11,9 +12,11 @@ using WebApplication1.Infrastructure;
 namespace BackendTeaTech.Migrations
 {
     [DbContext(typeof(ConnectionContext))]
-    partial class ConnectionContextModelSnapshot : ModelSnapshot
+    [Migration("20240315175011_criação-tabela-childassisted")]
+    partial class criaçãotabelachildassisted
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,47 +29,40 @@ namespace BackendTeaTech.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Aversions")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
-                        .HasColumnName("aversions");
+                        .HasColumnType("character varying(100)");
 
                     b.Property<DateTime>("BirthDate")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("birth_date");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("FoodSelectivity")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
-                        .HasColumnName("food_selectiity");
+                        .HasColumnType("character varying(100)");
 
                     b.Property<string>("MedicalRecord")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
-                        .HasColumnName("medical_record");
+                        .HasColumnType("character varying(100)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
-                        .HasColumnName("name");
+                        .HasColumnType("character varying(100)");
 
                     b.Property<string>("Photo")
+                        .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
-                        .HasColumnName("photo");
+                        .HasColumnType("character varying(100)");
 
                     b.Property<string>("Preferences")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
-                        .HasColumnName("preferences");
+                        .HasColumnType("character varying(100)");
 
                     b.Property<Guid?>("fk_responsible_id")
                         .HasColumnType("uuid");
@@ -75,89 +71,64 @@ namespace BackendTeaTech.Migrations
 
                     b.HasIndex("fk_responsible_id");
 
-                    b.ToTable("child_assisteds");
+                    b.ToTable("child_assisted");
                 });
 
             modelBuilder.Entity("WebApplication1.Models.Responsible", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("NameResponsibleOne")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
-                        .HasColumnName("name_responsible_one");
+                        .HasColumnType("character varying(100)");
 
                     b.Property<string>("NameResponsibleTwo")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
-                        .HasColumnName("name_responsible_two");
+                        .HasColumnType("character varying(100)");
 
                     b.Property<string>("ResponsibleCpfOne")
                         .IsRequired()
                         .HasMaxLength(20)
-                        .HasColumnType("character varying(20)")
-                        .HasColumnName("responsible_cpf_one");
+                        .HasColumnType("character varying(20)");
 
                     b.Property<string>("ResponsibleCpfTwo")
                         .IsRequired()
                         .HasMaxLength(20)
-                        .HasColumnType("character varying(20)")
-                        .HasColumnName("resposible_cpf_two");
+                        .HasColumnType("character varying(20)");
 
                     b.Property<string>("ResponsibleKinshipOne")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
-                        .HasColumnName("responsible_kinship_one");
+                        .HasColumnType("character varying(50)");
 
                     b.Property<string>("ResponsibleKinshipTwo")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
-                        .HasColumnName("responsible_kinship_two");
+                        .HasColumnType("character varying(50)");
 
-                    b.Property<Guid?>("fk_user_id")
+                    b.Property<Guid>("fk_user_id")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
                     b.HasIndex("fk_user_id");
 
-                    b.ToTable("responsibles");
+                    b.ToTable("responsible");
                 });
 
             modelBuilder.Entity("WebApplication1.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
-                        .HasColumnName("email");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
-                        .HasColumnName("password");
-
-                    b.Property<int>("UserType")
-                        .HasMaxLength(20)
-                        .HasColumnType("integer")
-                        .HasColumnName("user_type");
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
-                    b.ToTable("users");
+                    b.ToTable("user");
                 });
 
             modelBuilder.Entity("WebApplication1.Models.ChildAssisted", b =>
@@ -173,7 +144,9 @@ namespace BackendTeaTech.Migrations
                 {
                     b.HasOne("WebApplication1.User", "User")
                         .WithMany()
-                        .HasForeignKey("fk_user_id");
+                        .HasForeignKey("fk_user_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });

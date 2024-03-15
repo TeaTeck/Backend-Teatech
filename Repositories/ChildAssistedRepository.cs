@@ -1,4 +1,6 @@
-﻿using WebApplication1.Infrastructure;
+﻿using System;
+using System.Reflection.Metadata.Ecma335;
+using WebApplication1.Infrastructure;
 using WebApplication1.Interfaces;
 using WebApplication1.Models;
 
@@ -12,12 +14,27 @@ namespace WebApplication1.Repositories
         {
             _connectionContext = context;
         }
-        public void Add(ChildAssisted childAssisted)
+        public ChildAssistedDTO Add(ChildAssisted childAssisted)
         {
-            _connectionContext.ChildAssisteds.Add(childAssisted);
-            _connectionContext.SaveChanges();
-        }
 
+            var childAdd =  _connectionContext.ChildAssisteds.Add(childAssisted).Entity;
+            _connectionContext.SaveChanges();
+            
+            ChildAssistedDTO childAssistedDTO = new ChildAssistedDTO
+            {
+                Id = childAdd.Id,
+                Name = childAdd.Name,
+                BirthDate = childAdd.BirthDate,
+                FoodSelectivity = childAdd.FoodSelectivity,
+                Aversions = childAdd.Aversions,
+                Preferences = childAdd.Preferences,
+                MedicalRecord = childAdd.MedicalRecord,
+                Responsible = childAdd.Responsible,
+                Photo = childAdd.Photo,
+            };
+
+            return childAssistedDTO;
+        }
         public List<ChildAssisted> GetAll()
         {
             return _connectionContext.ChildAssisteds.ToList();

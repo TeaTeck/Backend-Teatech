@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using WebApplication1.Infrastructure;
@@ -11,9 +12,11 @@ using WebApplication1.Infrastructure;
 namespace BackendTeaTech.Migrations
 {
     [DbContext(typeof(ConnectionContext))]
-    partial class ConnectionContextModelSnapshot : ModelSnapshot
+    [Migration("20240315182410_edição-nomes-colunas")]
+    partial class ediçãonomescolunas
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -75,7 +78,7 @@ namespace BackendTeaTech.Migrations
 
                     b.HasIndex("fk_responsible_id");
 
-                    b.ToTable("child_assisteds");
+                    b.ToTable("child_assisted");
                 });
 
             modelBuilder.Entity("WebApplication1.Models.Responsible", b =>
@@ -128,7 +131,7 @@ namespace BackendTeaTech.Migrations
 
                     b.HasIndex("fk_user_id");
 
-                    b.ToTable("responsibles");
+                    b.ToTable("responsible");
                 });
 
             modelBuilder.Entity("WebApplication1.User", b =>
@@ -138,26 +141,9 @@ namespace BackendTeaTech.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
-                        .HasColumnName("email");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
-                        .HasColumnName("password");
-
-                    b.Property<int>("UserType")
-                        .HasMaxLength(20)
-                        .HasColumnType("integer")
-                        .HasColumnName("user_type");
-
                     b.HasKey("Id");
 
-                    b.ToTable("users");
+                    b.ToTable("user");
                 });
 
             modelBuilder.Entity("WebApplication1.Models.ChildAssisted", b =>

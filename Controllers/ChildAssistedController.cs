@@ -16,10 +16,9 @@ namespace WebApplication1.Controllers
         }
 
         [HttpPost("add")]
-        public IActionResult Add(string name, DateTime birthDate, string foodSelectivity, string aversions, string preferences, string medicalRecord, int responsible_id, string photo)
+        public IActionResult Add(string name, DateTime birthDate, string foodSelectivity, string aversions, string preferences, string medicalRecord, string photo)
         {
-            var childAssited = new ChildAssisted(name, birthDate.ToUniversalTime(), foodSelectivity, aversions, preferences, medicalRecord, responsible_id, photo);
-
+            var childAssited = new ChildAssisted(name, birthDate.ToUniversalTime(), foodSelectivity, aversions, preferences, medicalRecord, photo);
             _childAssisted.Add(childAssited);
             return Ok();
         }

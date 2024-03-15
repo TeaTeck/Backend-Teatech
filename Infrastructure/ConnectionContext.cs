@@ -9,8 +9,8 @@ namespace WebApplication1.Infrastructure
            : base(options)
         {
         }
-
         public DbSet<ChildAssisted> ChildAssisteds { get; set; }
 
-    }
+       
+    } 
 }
