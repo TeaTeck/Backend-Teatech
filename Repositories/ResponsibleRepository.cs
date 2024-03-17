@@ -1,10 +1,10 @@
-﻿using WebApplication1.Infrastructure;
-using WebApplication1.Interfaces;
+﻿using Interfaces.Repositories;
+using WebApplication1.Infrastructure;
 using WebApplication1.Models;
 
 namespace WebApplication1.Repositories
 {
-    public class ResponsibleRepository : IResponsible
+    public class ResponsibleRepository : IResponsibleRepository
     {
         private readonly ConnectionContextResponsible _connectionContextResponsible;
 
@@ -12,24 +12,11 @@ namespace WebApplication1.Repositories
         {
             _connectionContextResponsible = context;
         }
-        public ResponsibleDTO Add(Responsible responsible)
+        public Responsible Add(Responsible responsible)
         {
             var responsibleAdd = _connectionContextResponsible.Responsibles.Add(responsible).Entity;
             _connectionContextResponsible.SaveChanges();
-
-            ResponsibleDTO responsibleDTO = new ResponsibleDTO
-            {
-                Id = responsibleAdd.Id,
-                NameNameResponsibleOne = responsibleAdd.NameResponsibleOne,
-                ResponsibleKinshipOne = responsibleAdd.ResponsibleKinshipOne,
-                ResponsibleCpfOne = responsibleAdd.ResponsibleCpfOne,
-                NameResponsibleTwo = responsibleAdd.NameResponsibleTwo,
-                ResponsibleCpfTwo = responsibleAdd.ResponsibleCpfTwo,
-                ResponsibleKinshipTwo = responsibleAdd.ResponsibleCpfTwo,
-                User = responsibleAdd.User,
-            };
-
-            return responsibleDTO;
+            return responsibleAdd;
         }
 
         public List<Responsible> GetAll()

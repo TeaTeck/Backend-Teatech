@@ -5,7 +5,7 @@ namespace WebApplication1.Repositories
     public class ResponsibleDTO
     {
         public Guid Id { get; set; }
-        public string NameNameResponsibleOne { get; set; }
+        public string NameResponsibleOne { get; set; }
         public string ResponsibleKinshipOne { get; set; }
         public string ResponsibleCpfOne { get; set; }
         public string NameResponsibleTwo { get; set; }
@@ -19,7 +19,7 @@ namespace WebApplication1.Repositories
         public ResponsibleDTO(Guid id, string nameNameResponsibleOne, string responsibleKinshipOne, string responsibleCpfOne, string nameResponsibleTwo, string responsibleKinshipTwo, string responsibleCpfTwo, User? user)
         {
             Id = id;
-            NameNameResponsibleOne = nameNameResponsibleOne;
+            NameResponsibleOne = nameNameResponsibleOne;
             ResponsibleKinshipOne = responsibleKinshipOne;
             ResponsibleCpfOne = responsibleCpfOne;
             NameResponsibleTwo = nameResponsibleTwo;

@@ -19,7 +19,7 @@ namespace WebApplication1.Models
         [DataType(DataType.Date)]
         public DateTime BirthDate { get; private set; }
 
-        [Column("food_selectiity")]
+        [Column("food_selectivity")]
         [StringLength(100)]
         public string FoodSelectivity { get; private set; }
 

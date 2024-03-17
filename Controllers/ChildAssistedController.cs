@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using WebApplication1.Interfaces;
+﻿using Interfaces.Repositories;
+using Microsoft.AspNetCore.Mvc;
 using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
@@ -8,9 +8,9 @@ namespace WebApplication1.Controllers
     [Route("api/childAssisted")]
     public class ChildAssistedController : ControllerBase
     {
-        private readonly IChildAssisted _childAssisted;
+        private readonly IChildAssistedRepository _childAssisted;
 
-        public ChildAssistedController(IChildAssisted childAssisted)
+        public ChildAssistedController(IChildAssistedRepository childAssisted)
         {
             _childAssisted = childAssisted ?? throw new ArgumentNullException(nameof(childAssisted));
         }

@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Connections;
+﻿using Interfaces.Repositories;
+using Microsoft.AspNetCore.Connections;
 using WebApplication1.Infrastructure;
-using WebApplication1.Interfaces;
 using WebApplication1.Models;
 
 namespace WebApplication1.Repositories
 {
-    public class UserRepository : IUser
+    public class UserRepository : IUserRepository
     {
         private readonly ConnectionContextUser _connectionContextUser;
 
@@ -13,33 +13,21 @@ namespace WebApplication1.Repositories
         {
             _connectionContextUser = context;
         }
-        public UserDTO Add(User user)
+        public User Add(User user)
         {
             var userAdd = _connectionContextUser.Users.Add(user).Entity;
             _connectionContextUser.SaveChanges();
+            return userAdd;
 
-            UserDTO userDTO = new UserDTO
-            {
-                Id = user.Id,
-                Email = user.Email,
-                UserType = user.UserType
-            };
-
-            return userDTO;
         }
-        public List<UserDTO> GetAll()
+        public List<User> GetAll()
         {
-            var listUser = _connectionContextUser.Users.ToList();
+            return _connectionContextUser.Users.ToList();
+        }
 
-            var listUserDTO = listUser.Select(user => new UserDTO
-            {
-                Id = user.Id,
-                Email = user.Email,
-                UserType = user.UserType
-                
-            }).ToList();
-
-            return listUserDTO;
+        public User GetByEmail(string email)
+        {
+            return _connectionContextUser.Users.FirstOrDefault(user => user.Email == email);
         }
     }
 }

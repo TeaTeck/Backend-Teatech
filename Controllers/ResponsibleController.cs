@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Interfaces.Repositories;
+using Microsoft.AspNetCore.Mvc;
 using WebApplication1.Interfaces;
 using WebApplication1.Models;
 
@@ -8,9 +9,9 @@ namespace WebApplication1.Controllers
     [Route("api/responsible")]
     public class ResponsibleController : ControllerBase
     {
-        private readonly IResponsible _responsible;
+        private readonly IResponsibleRepository _responsible;
 
-        public ResponsibleController(IResponsible responsible)
+        public ResponsibleController(IResponsibleRepository responsible)
         {
             _responsible = responsible ?? throw new ArgumentNullException(nameof(responsible));
         }

@@ -17,7 +17,7 @@ namespace WebApplication1
 
         [Column("password")]
         [StringLength(100)]
-        public string Password { get; private set; }
+        public string Password { get; set; }
 
         [Column("user_type")]
         [StringLength(20)]

@@ -1,12 +1,10 @@
 ﻿using WebApplication1.Models;
 using WebApplication1.Repositories;
 
-namespace WebApplication1.Models
+namespace WebApplication1.Interfaces.Services
 {
-    public interface IResponsible
+    public interface IResponsibleService
     {
         ResponsibleDTO Add(Responsible responsible);
-
-        List<Responsible> GetAll();
     }
 }
