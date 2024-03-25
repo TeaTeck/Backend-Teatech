@@ -6,22 +6,22 @@ namespace WebApplication1.Repositories
 {
     public class ResponsibleRepository : IResponsibleRepository
     {
-        private readonly ConnectionContextResponsible _connectionContextResponsible;
+        private readonly ConnectionContext _connectionContext;
 
-        public ResponsibleRepository(ConnectionContextResponsible context)
+        public ResponsibleRepository(ConnectionContext context)
         {
-            _connectionContextResponsible = context;
+            _connectionContext = context;
         }
         public Responsible Add(Responsible responsible)
         {
-            var responsibleAdd = _connectionContextResponsible.Responsibles.Add(responsible).Entity;
-            _connectionContextResponsible.SaveChanges();
+            var responsibleAdd = _connectionContext.Responsibles.Add(responsible).Entity;
+            _connectionContext.SaveChanges();
             return responsibleAdd;
         }
 
         public List<Responsible> GetAll()
         {
-            return _connectionContextResponsible.Responsibles.ToList();
+            return _connectionContext.Responsibles.ToList();
         }
     }
 }

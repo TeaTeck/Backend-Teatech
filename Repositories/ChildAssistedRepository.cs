@@ -1,6 +1,4 @@
-﻿using System;
-using System.Reflection.Metadata.Ecma335;
-using Interfaces.Repositories;
+﻿using Interfaces.Repositories;
 using WebApplication1.Infrastructure;
 using WebApplication1.Models;
 

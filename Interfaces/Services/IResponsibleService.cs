@@ -5,6 +5,8 @@ namespace WebApplication1.Interfaces.Services
 {
     public interface IResponsibleService
     {
-        ResponsibleDTO Add(Responsible responsible);
+        Responsible CreateResponsible(Responsible responsible);
+
+        List<ResponsibleDTO> ListAllResponsible();
     }
 }

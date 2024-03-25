@@ -5,6 +5,8 @@ namespace WebApplication1.Interfaces.Services
 {
     public interface IChildAssistedService
     {
-        ChildAssistedDTO CreateChild(ChildAssisted childAssisted);
+        ChildAssisted CreateChild(ChildAssisted childAssisted);
+        List<ChildAssistedDTO> ListAllUser();
+
     }
 }

@@ -5,7 +5,9 @@ namespace WebApplication1.Interfaces.Services
 {
     public interface IUserService
     {
-        UserDTO CreateUser(User user);
+        User CreateUserResponsible(User user);
+
+        UserDTO CreateUserEmployee(User user);
 
         string Login(string email, string password);
 

@@ -10,7 +10,8 @@ namespace WebApplication1.Infrastructure
         {
         }
         public DbSet<ChildAssisted> ChildAssisteds { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Responsible> Responsibles { get; set; }
 
-       
     } 
 }

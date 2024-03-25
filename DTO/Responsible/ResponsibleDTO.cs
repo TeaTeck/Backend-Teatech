@@ -11,12 +11,15 @@ namespace WebApplication1.Repositories
         public string NameResponsibleTwo { get; set; }
         public string ResponsibleKinshipTwo { get; set; }
         public string ResponsibleCpfTwo { get; set; }
+        public string ContactOne { get; set; }
+        public string ContactTwo { get; set; }
+
         public User? User { get; set; }
 
         public ResponsibleDTO()
         {
         }
-        public ResponsibleDTO(Guid id, string nameNameResponsibleOne, string responsibleKinshipOne, string responsibleCpfOne, string nameResponsibleTwo, string responsibleKinshipTwo, string responsibleCpfTwo, User? user)
+        public ResponsibleDTO(Guid id, string nameNameResponsibleOne, string responsibleKinshipOne, string responsibleCpfOne, string nameResponsibleTwo, string responsibleKinshipTwo, string responsibleCpfTwo, string contactOne, string contactTwo, User? user)
         {
             Id = id;
             NameResponsibleOne = nameNameResponsibleOne;
@@ -25,6 +28,8 @@ namespace WebApplication1.Repositories
             NameResponsibleTwo = nameResponsibleTwo;
             ResponsibleKinshipTwo = responsibleKinshipTwo;
             ResponsibleCpfTwo = responsibleCpfTwo;
+            ContactOne = contactOne;
+            ContactTwo = contactTwo;
             User = user;
         }
     }

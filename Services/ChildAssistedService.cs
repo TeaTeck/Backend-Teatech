@@ -1,4 +1,5 @@
 ﻿using Interfaces.Repositories;
+using System;
 using WebApplication1.Interfaces.Services;
 using WebApplication1.Models;
 using WebApplication1.Repositories;
@@ -12,25 +13,32 @@ namespace WebApplication1.Services
         {
             _childAssistedRepository = childAssistedRepository;
         }
-        public ChildAssistedDTO CreateChild(ChildAssisted childAssisted)
+        public ChildAssisted CreateChild(ChildAssisted childAssisted)
         {
             var childAdd = _childAssistedRepository.Add(childAssisted);
-
-            ChildAssistedDTO childAssistedDTO = new ChildAssistedDTO
-            {
-                Id = childAdd.Id,
-                Name = childAdd.Name,
-                BirthDate = childAdd.BirthDate,
-                FoodSelectivity = childAdd.FoodSelectivity,
-                Aversions = childAdd.Aversions,
-                Preferences = childAdd.Preferences,
-                MedicalRecord = childAdd.MedicalRecord,
-                Responsible = childAdd.Responsible,
-                Photo = childAdd.Photo,
-            };
-
-            return childAssistedDTO;
+            return childAdd;
 
         }
-    }
+
+        public List<ChildAssistedDTO> ListAllUser()
+        {
+            var childs = _childAssistedRepository.GetAll();
+
+            List<ChildAssistedDTO> childDTO = childs.Select(childAssited => new ChildAssistedDTO
+            {
+                Id = childAssited.Id,
+                Name = childAssited.Name,
+                BirthDate = childAssited.BirthDate,
+                FoodSelectivity = childAssited.FoodSelectivity,
+                Aversions = childAssited.Aversions,
+                Preferences = childAssited.Preferences,
+                MedicalRecord = childAssited.MedicalRecord,
+                Responsible = childAssited.Responsible,
+                Photo = childAssited.Photo,
+
+            }).ToList();
+
+            return childDTO;
+        }
+    } 
 }

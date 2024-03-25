@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using WebApplication1.Infrastructure;
@@ -11,9 +12,11 @@ using WebApplication1.Infrastructure;
 namespace BackendTeaTech.Migrations
 {
     [DbContext(typeof(ConnectionContext))]
-    partial class ConnectionContextModelSnapshot : ModelSnapshot
+    [Migration("20240325161118_criação")]
+    partial class criação
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -80,16 +83,6 @@ namespace BackendTeaTech.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
-                    b.Property<string>("ContactOne")
-                        .HasMaxLength(11)
-                        .HasColumnType("character varying(11)")
-                        .HasColumnName("contact_one");
-
-                    b.Property<string>("ContactTwo")
-                        .HasMaxLength(11)
-                        .HasColumnType("character varying(11)")
-                        .HasColumnName("contact_two");
-
                     b.Property<string>("NameResponsibleOne")
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)")
@@ -111,13 +104,13 @@ namespace BackendTeaTech.Migrations
                         .HasColumnName("resposible_cpf_two");
 
                     b.Property<string>("ResponsibleKinshipOne")
-                        .HasMaxLength(10)
-                        .HasColumnType("character varying(10)")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
                         .HasColumnName("responsible_kinship_one");
 
                     b.Property<string>("ResponsibleKinshipTwo")
-                        .HasMaxLength(10)
-                        .HasColumnType("character varying(10)")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
                         .HasColumnName("responsible_kinship_two");
 
                     b.Property<Guid?>("fk_user_id")

@@ -13,6 +13,7 @@ builder.Services.AddTransient<IResponsibleRepository, ResponsibleRepository>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IResponsibleService, ResponsibleService>();
 builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<IChildAssistedService, ChildAssistedService>();
 
 
 // Add services to the container.
@@ -32,13 +33,13 @@ builder.Services.AddEntityFrameworkNpgsql()
     .AddDbContext<ConnectionContext>(options =>
     options.UseNpgsql("Server=localhost;Port=5432;Database=teatechdatabase;User Id=postgres;Password=ARROZDOCE;"));
 
-builder.Services.AddEntityFrameworkNpgsql()
-    .AddDbContext<ConnectionContextResponsible>(options =>
-    options.UseNpgsql("Server=localhost;Port=5432;Database=teatechdatabase;User Id=postgres;Password=ARROZDOCE;"));
+//builder.Services.AddEntityFrameworkNpgsql()
+//    .AddDbContext<ConnectionContextResponsible>(options =>
+//    options.UseNpgsql("Server=localhost;Port=5432;Database=teatechdatabase;User Id=postgres;Password=ARROZDOCE;"));
 
-builder.Services.AddEntityFrameworkNpgsql()
-    .AddDbContext<ConnectionContextUser>(options =>
-    options.UseNpgsql("Server=localhost;Port=5432;Database=teatechdatabase;User Id=postgres;Password=ARROZDOCE;"));
+//builder.Services.AddEntityFrameworkNpgsql()
+//    .AddDbContext<ConnectionContextUser>(options =>
+//    options.UseNpgsql("Server=localhost;Port=5432;Database=teatechdatabase;User Id=postgres;Password=ARROZDOCE;"));
 
 var app = builder.Build();
 

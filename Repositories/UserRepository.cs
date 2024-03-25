@@ -1,5 +1,4 @@
 ﻿using Interfaces.Repositories;
-using Microsoft.AspNetCore.Connections;
 using WebApplication1.Infrastructure;
 using WebApplication1.Models;
 
@@ -7,9 +6,9 @@ namespace WebApplication1.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        private readonly ConnectionContextUser _connectionContextUser;
+        private readonly ConnectionContext _connectionContextUser;
 
-        public UserRepository(ConnectionContextUser context)
+        public UserRepository(ConnectionContext context)
         {
             _connectionContextUser = context;
         }

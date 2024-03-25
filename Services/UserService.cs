@@ -14,7 +14,9 @@ namespace WebApplication1.Services
             _userRepository = userRepository;
             _jwtService = jwtService;
         }
-        public UserDTO CreateUser(User user)
+
+
+        public User CreateUserResponsible(User user)
         {
             var existingUser = _userRepository.GetByEmail(user.Email);
 
@@ -26,6 +28,28 @@ namespace WebApplication1.Services
             string hashedPassword = PasswordHasher.HashPassword(user.Password);
 
             user.Password = hashedPassword;
+
+            user.UserType = Enum.UserType.Responsible;
+
+            var createdUser = _userRepository.Add(user);
+
+            return createdUser;
+        }
+
+        public UserDTO CreateUserEmployee(User user)
+        {
+            var existingUser = _userRepository.GetByEmail(user.Email);
+
+            if (existingUser != null)
+            {
+                throw new Exception("User already exists");
+            }
+
+            string hashedPassword = PasswordHasher.HashPassword(user.Password);
+
+            user.Password = hashedPassword;
+
+            user.UserType = Enum.UserType.Employee;
 
             var createdUser = _userRepository.Add(user);
 

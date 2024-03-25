@@ -20,23 +20,6 @@ namespace WebApplication1.Controllers
             _jwtService = jwtService;
         }
 
-        [HttpPost("add")]
-        public IActionResult CreateUser(string email, string password, UserType userType)
-        {
-            try
-            {
-                var user = new User(email, password, userType);
-                var createdUser = _userService.CreateUser(user);
-
-                return StatusCode(201, createdUser);
-
-            }
-            catch (Exception ex)
-            {
-                return BadRequest($"{ex.Message}");
-            }
-        }
-
         [HttpGet("list")]
         public IActionResult ListAllUser()
         {

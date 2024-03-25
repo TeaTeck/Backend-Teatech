@@ -12,25 +12,35 @@ namespace WebApplication1.Services
             _responsibleRepository = responsibleRepository;
         }
 
-        public ResponsibleDTO Add(Responsible responsible)
+        public Responsible CreateResponsible(Responsible responsible)
         {
             var responsibleAdd = _responsibleRepository.Add(responsible);
 
-            ResponsibleDTO responsibleDTO = new ResponsibleDTO
+            return responsibleAdd;
+        }
+
+        public List<ResponsibleDTO> ListAllResponsible()
+        {
+            var responsibles = _responsibleRepository.GetAll();
+
+            List<ResponsibleDTO> responsibleDTO = responsibles.Select(responsible => new ResponsibleDTO
             {
-                Id = responsibleAdd.Id,
-                NameResponsibleOne = responsibleAdd.NameResponsibleOne,
-                ResponsibleKinshipOne = responsibleAdd.ResponsibleKinshipOne,
-                ResponsibleCpfOne = responsibleAdd.ResponsibleCpfOne,
-                NameResponsibleTwo = responsibleAdd.NameResponsibleTwo,
-                ResponsibleCpfTwo = responsibleAdd.ResponsibleCpfTwo,
-                ResponsibleKinshipTwo = responsibleAdd.ResponsibleCpfTwo,
-                User = responsibleAdd.User,
-            };
+                Id = responsible.Id,
+                NameResponsibleOne = responsible.NameResponsibleOne,
+                ResponsibleKinshipOne = responsible.ResponsibleKinshipOne,
+                ResponsibleCpfOne = responsible.ResponsibleCpfOne,
+                ContactOne = responsible.ContactOne,
+                NameResponsibleTwo = responsible.NameResponsibleTwo,
+                ResponsibleKinshipTwo = responsible.ResponsibleKinshipTwo,
+                ResponsibleCpfTwo = responsible.ResponsibleCpfTwo,
+                ContactTwo = responsible.ContactTwo,
+                User = responsible.User,
+                
+            }).ToList();
 
             return responsibleDTO;
         }
 
-        
+
     }
 }

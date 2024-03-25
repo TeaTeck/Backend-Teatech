@@ -1,6 +1,7 @@
 ﻿using Interfaces.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using WebApplication1.Interfaces;
+using WebApplication1.Interfaces.Services;
 using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
@@ -9,27 +10,18 @@ namespace WebApplication1.Controllers
     [Route("api/responsible")]
     public class ResponsibleController : ControllerBase
     {
-        private readonly IResponsibleRepository _responsible;
+        private readonly IResponsibleService _responsibleService;
 
-        public ResponsibleController(IResponsibleRepository responsible)
+        public ResponsibleController(IResponsibleService responsibleService)
         {
-            _responsible = responsible ?? throw new ArgumentNullException(nameof(responsible));
+            _responsibleService = responsibleService;
         }
 
-        [HttpPost("add")]
-        public IActionResult Add(string nameResponsibleOne, string responsibleKinshipOne, string responsibleCpfOne, string nameResponsibleTwo, string responsibleKinshipTwo, string responsibleCpfTwo)
+        [HttpGet("list")]
+        public IActionResult ListAllResponsible()
         {
-            var reponsible = new Responsible(nameResponsibleOne, responsibleKinshipOne, responsibleCpfOne, nameResponsibleTwo, responsibleKinshipTwo, responsibleCpfTwo);
-
-            _responsible.Add(reponsible);
-            return Ok();
-        }
-
-        [HttpGet]
-        public IActionResult GetAll()
-        {
-            var reponsible = _responsible.GetAll();
-            return Ok(reponsible);
+            var reponsibles = _responsibleService.ListAllResponsible();
+            return Ok(new { message = "List retrieved successfully", reponsibles });
         }
     }
 }
