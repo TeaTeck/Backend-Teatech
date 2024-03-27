@@ -15,7 +15,6 @@ builder.Services.AddTransient<IResponsibleService, ResponsibleService>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IChildAssistedService, ChildAssistedService>();
 
-
 // Add services to the container.
 
 builder.Services.AddSingleton<JwtService>(provider =>
@@ -29,17 +28,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddEntityFrameworkNpgsql()
-    .AddDbContext<ConnectionContext>(options =>
-    options.UseNpgsql("Server=localhost;Port=5432;Database=teatechdatabase;User Id=postgres;Password=ARROZDOCE;"));
-
-//builder.Services.AddEntityFrameworkNpgsql()
-//    .AddDbContext<ConnectionContextResponsible>(options =>
-//    options.UseNpgsql("Server=localhost;Port=5432;Database=teatechdatabase;User Id=postgres;Password=ARROZDOCE;"));
-
-//builder.Services.AddEntityFrameworkNpgsql()
-//    .AddDbContext<ConnectionContextUser>(options =>
-//    options.UseNpgsql("Server=localhost;Port=5432;Database=teatechdatabase;User Id=postgres;Password=ARROZDOCE;"));
+builder.Services.AddDbContext<ConnectionContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 
