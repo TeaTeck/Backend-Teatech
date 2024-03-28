@@ -7,6 +7,7 @@ namespace WebApplication1.Interfaces.Services
     {
         ChildAssisted CreateChild(ChildAssisted childAssisted);
         List<ChildAssistedDTO> ListAllUser();
+        void DeleteChildById(Guid id);
 
     }
 }

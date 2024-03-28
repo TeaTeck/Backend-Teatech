@@ -95,6 +95,17 @@ namespace WebApplication1.Services
             return null; 
         }
 
-
+        public void DeleteUserById(Guid id)
+        {
+            var existingUser = _userRepository.GetById(id);
+            if (existingUser != null)
+            {
+                _userRepository.DeleteById(id);
+            }
+            else
+            {
+                throw new ArgumentException("User not found.");
+            }
+        }
     }
 }

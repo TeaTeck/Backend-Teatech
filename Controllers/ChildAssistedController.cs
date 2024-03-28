@@ -59,6 +59,26 @@ namespace WebApplication1.Controllers
             var childAssisteds = _childAssistedService.ListAllUser();
             return Ok(new { message = "List retrieved successfully", childAssisteds });
         }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteChild(Guid id)
+        {
+            try
+            {
+                _childAssistedService.DeleteChildById(id);
+                return Ok("Child deleted successfully.");
+            }
+            catch (ArgumentException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "An error occurred while processing the request.");
+            }
+        }
+
+
     }
     
     

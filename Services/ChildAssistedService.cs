@@ -19,7 +19,6 @@ namespace WebApplication1.Services
             return childAdd;
 
         }
-
         public List<ChildAssistedDTO> ListAllUser()
         {
             var childs = _childAssistedRepository.GetAll();
@@ -39,6 +38,20 @@ namespace WebApplication1.Services
             }).ToList();
 
             return childDTO;
+            
         }
-    } 
+        public void DeleteChildById(Guid id)
+        {
+            var existingChild = _childAssistedRepository.GetById(id);
+            if (existingChild != null)
+            {
+                _childAssistedRepository.DeleteById(id);
+            }
+            else
+            {
+                throw new ArgumentException("User not found.");
+            }
+        }
+
+    }
 }

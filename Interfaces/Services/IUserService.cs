@@ -6,12 +6,10 @@ namespace WebApplication1.Interfaces.Services
     public interface IUserService
     {
         User CreateUserResponsible(User user);
-
         UserDTO CreateUserEmployee(User user);
-
         string Login(string email, string password);
-
         List<UserDTO> ListAllUser();
+        void DeleteUserById(Guid id);
     }
 }
 

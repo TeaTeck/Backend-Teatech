@@ -48,5 +48,23 @@ namespace WebApplication1.Controllers
             }
         }
 
+        [HttpDelete("{id}")]
+        public IActionResult DeleteUser(Guid id)
+        {
+            try
+            {
+                _userService.DeleteUserById(id);
+                return Ok("User deleted successfully.");
+            }
+            catch (ArgumentException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "An error occurred while processing the request.");
+            }
+        }
+
     }
 }

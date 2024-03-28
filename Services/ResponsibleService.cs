@@ -19,6 +19,19 @@ namespace WebApplication1.Services
             return responsibleAdd;
         }
 
+        public void DeleteResponsibleById(Guid id)
+        {
+            var existingResponsible = _responsibleRepository.GetById(id);
+            if (existingResponsible != null)
+            {
+                _responsibleRepository.DeleteById(id);
+            }
+            else
+            {
+                throw new ArgumentException("Responsible not found.");
+            }
+        }
+
         public List<ResponsibleDTO> ListAllResponsible()
         {
             var responsibles = _responsibleRepository.GetAll();
