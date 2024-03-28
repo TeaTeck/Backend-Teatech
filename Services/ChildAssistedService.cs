@@ -53,5 +53,10 @@ namespace WebApplication1.Services
             }
         }
 
+        public List<ChildAssisted> FilterByData(string data)
+        {
+            return _childAssistedRepository.GetByData(data);
+        }
+
     }
 }

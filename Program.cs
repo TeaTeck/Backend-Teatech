@@ -8,6 +8,17 @@ using WebApplication1.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin",
+        builder =>
+        {
+            builder.WithOrigins("http://localhost:3000")
+                   .AllowAnyHeader()
+                   .AllowAnyMethod();
+        });
+});
+
 builder.Services.AddTransient<IChildAssistedRepository, ChildAssistedRepository>();
 builder.Services.AddTransient<IResponsibleRepository, ResponsibleRepository>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
@@ -32,6 +43,8 @@ builder.Services.AddDbContext<ConnectionContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
+
+app.UseCors("AllowSpecificOrigin");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

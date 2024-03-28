@@ -78,6 +78,19 @@ namespace WebApplication1.Controllers
             }
         }
 
+        [HttpGet("filterByData")]
+        public IActionResult FilterByData([FromQuery] string data)
+        {
+            try
+            {
+                var filteredUsers = _childAssistedService.FilterByData(data);
+                return Ok(filteredUsers);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred while filtering user information: {ex.Message}");
+            }
+        }
 
     }
     

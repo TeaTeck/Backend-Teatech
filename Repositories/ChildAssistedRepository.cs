@@ -124,5 +124,24 @@ namespace WebApplication1.Repositories
                 throw new Exception(ex.Message);
             }
         }
+
+        public List<ChildAssisted> GetByData(string data)
+        {
+            try
+            {
+                return _connectionContext.ChildAssisteds.Where(c => c.Name.Contains(data) || 
+                                                                    c.Responsible.NameResponsibleOne.Contains(data) || 
+                                                                    c.Responsible.NameResponsibleTwo.Contains(data) || 
+                                                                    c.Responsible.ResponsibleCpfOne.Contains(data) || 
+                                                                    c.Responsible.ResponsibleCpfTwo.Contains(data) ||
+                                                                    c.Responsible.ContactOne.Contains(data) ||
+                                                                    c.Responsible.ContactTwo.Contains(data) 
+                                                                ).ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Data not found.", ex);
+            }
+        }
     }
 }

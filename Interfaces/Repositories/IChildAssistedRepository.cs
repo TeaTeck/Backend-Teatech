@@ -10,6 +10,6 @@ namespace Interfaces.Repositories
         void DeleteById(Guid id);
         ChildAssisted? GetById(Guid id);
         ChildAssisted Update(ChildAssisted childAssisted);
-
+        List<ChildAssisted> GetByData(string data);
     }
 }
