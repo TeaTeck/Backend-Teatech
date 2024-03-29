@@ -6,28 +6,20 @@ namespace WebApplication1.Repositories
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public DateTime BirthDate { get; set; }
-        public string FoodSelectivity { get; set; }
-        public string Aversions { get; set; }
-        public string Preferences { get; set; }
-        public string MedicalRecord { get; set; }
-        public Responsible? Responsible { get; set; }
-        public string? Photo { get; set; }
+        public string Email { get; set; }
+        public string Contact { get; set; }
 
         public ChildAssistedDTO()
         {
         }
-        public ChildAssistedDTO(Guid id, string name, DateTime birthDate, string foodSelectivity, string aversions, string preferences, string medicalRecord, Responsible? responsible, string? photo)
+        public ChildAssistedDTO(Guid id, string name, string email, string contact)
         {
             Id = id;
             Name = name;
-            BirthDate = birthDate;
-            FoodSelectivity = foodSelectivity;
-            Aversions = aversions;
-            Preferences = preferences;
-            MedicalRecord = medicalRecord;
-            Responsible = responsible;
-            Photo = photo;
+            Email = email;
+            Contact = contact;
+
+
         }
     }
 }

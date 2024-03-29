@@ -31,7 +31,7 @@ namespace WebApplication1.Repositories
         {
             try
             {
-                return _connectionContext.ChildAssisteds.ToList();
+                return _connectionContext.ChildAssisteds.Include(c => c.Responsible).Include(c => c.Responsible.User).ToList();
             }
             catch (Exception ex)
             {
@@ -129,14 +129,18 @@ namespace WebApplication1.Repositories
         {
             try
             {
-                return _connectionContext.ChildAssisteds.Where(c => c.Name.Contains(data) || 
-                                                                    c.Responsible.NameResponsibleOne.Contains(data) || 
-                                                                    c.Responsible.NameResponsibleTwo.Contains(data) || 
-                                                                    c.Responsible.ResponsibleCpfOne.Contains(data) || 
-                                                                    c.Responsible.ResponsibleCpfTwo.Contains(data) ||
-                                                                    c.Responsible.ContactOne.Contains(data) ||
-                                                                    c.Responsible.ContactTwo.Contains(data) 
-                                                                ).ToList();
+                data = data.ToLower();
+                return _connectionContext.ChildAssisteds.Include(c => c.Responsible)
+                                                        .Include(c => c.Responsible.User)
+                                                        .Where(c => c.Name.ToLower().Contains(data) || 
+                                                                    c.Responsible.NameResponsibleOne.ToLower().Contains(data) || 
+                                                                    c.Responsible.NameResponsibleTwo.ToLower().Contains(data) || 
+                                                                    c.Responsible.ResponsibleCpfOne.ToLower().Contains(data) || 
+                                                                    c.Responsible.ResponsibleCpfTwo.ToLower().Contains(data) ||
+                                                                    c.Responsible.ContactOne.ToLower().Contains(data) ||
+                                                                    c.Responsible.ContactTwo.ToLower().Contains(data) ||
+                                                                    c.Responsible.User.Email.ToLower().Contains(data))
+                                                        .ToList();
             }
             catch (Exception ex)
             {

@@ -53,11 +53,18 @@ namespace WebApplication1.Controllers
             
         }
 
-        [HttpGet("list")]
-        public IActionResult GetAll()
+        [HttpGet("filterByData")]
+        public IActionResult FilterByData(string data = "")
         {
-            var childAssisteds = _childAssistedService.ListAllUser();
-            return Ok(new { message = "List retrieved successfully", childAssisteds });
+            try
+            {
+                var filteredUsers = _childAssistedService.FilterByData(data);
+                return Ok(filteredUsers);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred while filtering user information: {ex.Message}");
+            }
         }
 
         [HttpDelete("{id}")]
@@ -78,19 +85,7 @@ namespace WebApplication1.Controllers
             }
         }
 
-        [HttpGet("filterByData")]
-        public IActionResult FilterByData([FromQuery] string data)
-        {
-            try
-            {
-                var filteredUsers = _childAssistedService.FilterByData(data);
-                return Ok(filteredUsers);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"An error occurred while filtering user information: {ex.Message}");
-            }
-        }
+       
 
     }
     

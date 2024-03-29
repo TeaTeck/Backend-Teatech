@@ -19,27 +19,7 @@ namespace WebApplication1.Services
             return childAdd;
 
         }
-        public List<ChildAssistedDTO> ListAllUser()
-        {
-            var childs = _childAssistedRepository.GetAll();
 
-            List<ChildAssistedDTO> childDTO = childs.Select(childAssited => new ChildAssistedDTO
-            {
-                Id = childAssited.Id,
-                Name = childAssited.Name,
-                BirthDate = childAssited.BirthDate,
-                FoodSelectivity = childAssited.FoodSelectivity,
-                Aversions = childAssited.Aversions,
-                Preferences = childAssited.Preferences,
-                MedicalRecord = childAssited.MedicalRecord,
-                Responsible = childAssited.Responsible,
-                Photo = childAssited.Photo,
-
-            }).ToList();
-
-            return childDTO;
-            
-        }
         public void DeleteChildById(Guid id)
         {
             var existingChild = _childAssistedRepository.GetById(id);
@@ -53,9 +33,15 @@ namespace WebApplication1.Services
             }
         }
 
-        public List<ChildAssisted> FilterByData(string data)
+        public List<ChildAssistedDTO> FilterByData(string data)
         {
-            return _childAssistedRepository.GetByData(data);
+            var childs = _childAssistedRepository.GetByData(data);
+
+            List<ChildAssistedDTO> childAssistedDTOs = new List<ChildAssistedDTO>();
+
+            childs.ForEach(child => childAssistedDTOs.Add(new ChildAssistedDTO(child.Id, child.Name, child.Responsible.User.Email, child.Responsible.ContactOne)));
+
+            return childAssistedDTOs;
         }
 
     }
