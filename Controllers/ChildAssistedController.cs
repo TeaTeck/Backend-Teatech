@@ -85,7 +85,30 @@ namespace WebApplication1.Controllers
             }
         }
 
-       
+        [HttpGet("{id}")]
+        public IActionResult GetChildById(Guid id)
+        {
+            try
+            {
+                var child = _childAssistedService.GetChildById(id);
+                if (child == null)
+                {
+                    return NotFound("ChildAssisted not found.");
+                }
+                return Ok(child);
+            }
+            catch (ArgumentException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred while processing the request." + ex);
+            }
+
+        }
+
+
 
     }
     

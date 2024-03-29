@@ -8,6 +8,7 @@ namespace WebApplication1.Interfaces.Services
         ChildAssisted CreateChild(ChildAssisted childAssisted);
         void DeleteChildById(Guid id);
         List<ChildAssistedDTO> FilterByData(string data);
+        ChildAssisted GetChildById(Guid id);
 
     }
 }

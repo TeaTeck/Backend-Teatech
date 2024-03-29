@@ -44,5 +44,21 @@ namespace WebApplication1.Services
             return childAssistedDTOs;
         }
 
+        public ChildAssisted GetChildById(Guid id)
+        {
+            try
+            {
+                var childAssisted = _childAssistedRepository.GetById(id);
+                if (childAssisted == null)
+                {
+                    throw new ArgumentException($"Criança com o ID {id} não encontrada.");
+                }
+                return childAssisted;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("", ex);
+            }
+        }
     }
 }

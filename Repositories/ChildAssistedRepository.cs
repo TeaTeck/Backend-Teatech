@@ -73,8 +73,9 @@ namespace WebApplication1.Repositories
             {
                 try
                 {
-                    ChildAssisted? childAssisted = _connectionContext.ChildAssisteds.Find(id);
-
+                    ChildAssisted? childAssisted = _connectionContext.ChildAssisteds.Include(c => c.Responsible)
+                                                                                     .ThenInclude(r => r.User)
+                                                                                    .FirstOrDefault(c => c.Id.Equals(id));
                     if (childAssisted != null)
                     {
                          return childAssisted;
