@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using WebApplication1.DTO.ChildAssisted;
 using WebApplication1.Enum;
 using WebApplication1.Interfaces.Services;
 using WebApplication1.lib;
@@ -26,7 +27,7 @@ namespace WebApplication1.Controllers
         }
 
         [HttpPost("add")]
-        public IActionResult Add(string name, DateTime birthDate, string foodSelectivity, string aversions, string preferences, string medicalRecord, string photo, string email, string responsibleCpfOne, string nameResponsibleOne, string responsibleKinshipOne, string nameResponsibleTwo, string responsibleKinshipTwo, string responsibleCpfTwo, string contactOne, string contactTwo)
+        public IActionResult Add([FromBody] ChildAssistedRequestDTO req)
         {
             //Criar usuario
             //User userResponsible = _userService.CreateUserResponsible("Passar dados")
@@ -36,13 +37,13 @@ namespace WebApplication1.Controllers
 
             try
             {
-                User userResponsible = new User(email, responsibleCpfOne);
+                User userResponsible = new User(req.Email, req.ResponsibleCpfOne);
                 userResponsible = _userService.CreateUserResponsible(userResponsible);
 
-                Responsible responsible = new Responsible(nameResponsibleOne, responsibleCpfOne, responsibleKinshipOne, nameResponsibleTwo, responsibleKinshipTwo, responsibleCpfTwo, contactOne, contactTwo, userResponsible);
+                Responsible responsible = new Responsible(req.NameResponsibleOne, req.ResponsibleCpfOne, req.ResponsibleKinshipOne, req.NameResponsibleTwo, req.ResponsibleKinshipTwo, req.ResponsibleCpfTwo, req.ContactOne, req.ContactTwo, userResponsible);
                 responsible = _responsibleService.CreateResponsible(responsible);
 
-                var childAssited = new ChildAssisted(name, birthDate.ToUniversalTime(), foodSelectivity, aversions, preferences, medicalRecord, photo, responsible);
+                var childAssited = new ChildAssisted(req.Name, req.BirthDate.ToUniversalTime(), req.FoodSelectivity, req.Aversions, req.Preferences, req.MedicalRecord, req.Photo, responsible);
                 childAssited = _childAssistedService.CreateChild(childAssited);
                 return Ok();
             }
