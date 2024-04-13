@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace BackendTeaTech.Migrations
+namespace Backend_TeaTech.Migrations
 {
     /// <inheritdoc />
     public partial class alteraçãonometabela : Migration

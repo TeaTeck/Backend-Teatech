@@ -1,7 +1,6 @@
-﻿using WebApplication1;
-using WebApplication1.Repositories;
+﻿using Backend_TeaTech.Models;
 
-namespace Interfaces.Repositories
+namespace Backend_TeaTech.Interfaces.Repositories
 {
     public interface IUserRepository
     {

@@ -1,9 +1,9 @@
-﻿using Interfaces.Repositories;
-using Microsoft.EntityFrameworkCore;
-using WebApplication1.Infrastructure;
-using WebApplication1.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using Backend_TeaTech.Infrastructure;
+using Backend_TeaTech.Models;
+using Backend_TeaTech.Interfaces.Repositories;
 
-namespace WebApplication1.Repositories
+namespace Backend_TeaTech.Repositories
 {
     public class ChildAssistedRepository : IChildAssistedRepository
     {

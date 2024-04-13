@@ -1,4 +1,4 @@
-﻿namespace WebApplication1.Enum
+﻿namespace Backend_TeaTech.Enum
 {
     public enum UserType
     {

@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using WebApplication1.Infrastructure;
+using Backend_TeaTech.Infrastructure;
 
 #nullable disable
 
-namespace BackendTeaTech.Migrations
+namespace Backend_TeaTech.Migrations
 {
     [DbContext(typeof(ConnectionContext))]
     [Migration("20240315182410_edição-nomes-colunas")]
@@ -25,7 +25,7 @@ namespace BackendTeaTech.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("WebApplication1.Models.ChildAssisted", b =>
+            modelBuilder.Entity("Backend_TeaTech.Models.ChildAssisted", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -81,7 +81,7 @@ namespace BackendTeaTech.Migrations
                     b.ToTable("child_assisted");
                 });
 
-            modelBuilder.Entity("WebApplication1.Models.Responsible", b =>
+            modelBuilder.Entity("Backend_TeaTech.Models.Responsible", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -134,7 +134,7 @@ namespace BackendTeaTech.Migrations
                     b.ToTable("responsible");
                 });
 
-            modelBuilder.Entity("WebApplication1.User", b =>
+            modelBuilder.Entity("Backend_TeaTech.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -146,18 +146,18 @@ namespace BackendTeaTech.Migrations
                     b.ToTable("user");
                 });
 
-            modelBuilder.Entity("WebApplication1.Models.ChildAssisted", b =>
+            modelBuilder.Entity("Backend_TeaTech.Models.ChildAssisted", b =>
                 {
-                    b.HasOne("WebApplication1.Models.Responsible", "Responsible")
+                    b.HasOne("Backend_TeaTech.Models.Responsible", "Responsible")
                         .WithMany()
                         .HasForeignKey("fk_responsible_id");
 
                     b.Navigation("Responsible");
                 });
 
-            modelBuilder.Entity("WebApplication1.Models.Responsible", b =>
+            modelBuilder.Entity("Backend_TeaTech.Models.Responsible", b =>
                 {
-                    b.HasOne("WebApplication1.User", "User")
+                    b.HasOne("Backend_TeaTech.User", "User")
                         .WithMany()
                         .HasForeignKey("fk_user_id");
 

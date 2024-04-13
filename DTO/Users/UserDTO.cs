@@ -1,6 +1,7 @@
-﻿using WebApplication1.Enum;
+﻿using Backend_TeaTech.Enum;
+using Backend_TeaTech.Models;
 
-namespace WebApplication1.Repositories
+namespace Backend_TeaTech.DTO.Users
 {
     public class UserDTO
     {
@@ -16,6 +17,11 @@ namespace WebApplication1.Repositories
             Email = email;
             UserType = userType;
         }
-
+        public UserDTO(User user)
+        {
+            Id = user.Id;
+            Email = user.Email;
+            UserType = user.UserType;
+        }
     }
 }

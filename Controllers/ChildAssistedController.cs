@@ -1,15 +1,9 @@
-﻿using Interfaces.Repositories;
-using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using WebApplication1.DTO.ChildAssisted;
-using WebApplication1.Enum;
-using WebApplication1.Interfaces.Services;
-using WebApplication1.lib;
-using WebApplication1.Models;
-using WebApplication1.Services;
+﻿using Microsoft.AspNetCore.Mvc;
+using Backend_TeaTech.DTO.ChildAssisted;
+using Backend_TeaTech.Interfaces.Services;
+using Backend_TeaTech.Models;
 
-namespace WebApplication1.Controllers
+namespace Backend_TeaTech.Controllers
 {
     [ApiController]
     [Route("api/childAssisted")]

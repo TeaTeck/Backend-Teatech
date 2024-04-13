@@ -1,6 +1,6 @@
-@WebApplication1_HostAddress = http://localhost:5149
+@Backend_TeaTech_HostAddress = http://localhost:5149
 
-GET {{WebApplication1_HostAddress}}/weatherforecast/
+GET {{Backend_TeaTech_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###

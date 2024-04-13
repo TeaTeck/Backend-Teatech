@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace WebApplication1.Models
+namespace Backend_TeaTech.Models
 {
     [Table("child_assisteds")]
     public class ChildAssisted

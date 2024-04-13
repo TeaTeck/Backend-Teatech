@@ -1,10 +1,11 @@
-﻿using Interfaces.Repositories;
-using System;
-using WebApplication1.Interfaces.Services;
-using WebApplication1.Models;
-using WebApplication1.Repositories;
+﻿using System;
+using Backend_TeaTech.Interfaces.Services;
+using Backend_TeaTech.Models;
+using Backend_TeaTech.Repositories;
+using Backend_TeaTech.Interfaces.Repositories;
+using Backend_TeaTech.DTO.ChildAssisted;
 
-namespace WebApplication1.Services
+namespace Backend_TeaTech.Services
 {
     public class ChildAssistedService : IChildAssistedService
     {

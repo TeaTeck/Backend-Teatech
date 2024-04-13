@@ -1,8 +1,9 @@
-﻿using Interfaces.Repositories;
-using WebApplication1.Infrastructure;
-using WebApplication1.Models;
+﻿using Backend_TeaTech.Infrastructure;
+using Backend_TeaTech.Models;
+using Backend_TeaTech.Interfaces.Repositories;
+using Microsoft.EntityFrameworkCore;
 
-namespace WebApplication1.Repositories
+namespace Backend_TeaTech.Repositories
 {
     public class ResponsibleRepository : IResponsibleRepository
     {
@@ -59,7 +60,7 @@ namespace WebApplication1.Repositories
         {
             try
             {
-                return _connectionContext.Responsibles.ToList();
+                return _connectionContext.Responsibles.Include(r => r.User).ToList();
             }catch (Exception ex)
             {
                 throw new Exception("Internal database error - Message: " + ex.Message);

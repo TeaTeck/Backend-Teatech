@@ -1,9 +1,10 @@
-﻿using Interfaces.Repositories;
-using WebApplication1.Interfaces.Services;
-using WebApplication1.lib;
-using WebApplication1.Repositories;
+﻿using Backend_TeaTech.DTO.Users;
+using Backend_TeaTech.Interfaces.Repositories;
+using Backend_TeaTech.Interfaces.Services;
+using Backend_TeaTech.lib;
+using Backend_TeaTech.Models;
 
-namespace WebApplication1.Services
+namespace Backend_TeaTech.Services
 {
     public class UserService : IUserService
     {
@@ -37,7 +38,7 @@ namespace WebApplication1.Services
         }
 
         public UserDTO CreateUserEmployee(User user)
-        {
+         {
             var existingUser = _userRepository.GetByEmail(user.Email);
 
             if (existingUser != null)

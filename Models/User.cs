@@ -1,7 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Backend_TeaTech.Enum;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using WebApplication1.Enum;
-namespace WebApplication1
+
+namespace Backend_TeaTech.Models
 {
     [Table("users")]
     public class User
@@ -36,7 +37,7 @@ namespace WebApplication1
         {
             Email = email;
             Password = password;
-            
+
         }
 
     }

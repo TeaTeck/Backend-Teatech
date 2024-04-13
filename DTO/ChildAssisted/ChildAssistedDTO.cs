@@ -1,6 +1,5 @@
-﻿using WebApplication1.Models;
-
-namespace WebApplication1.Repositories
+﻿
+namespace Backend_TeaTech.DTO.ChildAssisted
 {
     public class ChildAssistedDTO
     {

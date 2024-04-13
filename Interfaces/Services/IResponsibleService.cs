@@ -1,7 +1,8 @@
-﻿using WebApplication1.Models;
-using WebApplication1.Repositories;
+﻿
+using Backend_TeaTech.DTO.Responsibles;
+using Backend_TeaTech.Models;
 
-namespace WebApplication1.Interfaces.Services
+namespace Backend_TeaTech.Interfaces.Services
 {
     public interface IResponsibleService
     {

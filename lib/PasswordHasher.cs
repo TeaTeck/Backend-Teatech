@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace WebApplication1.lib
+namespace Backend_TeaTech.lib
 {
     public class PasswordHasher
     {

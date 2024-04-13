@@ -1,10 +1,10 @@
-using WebApplication1.Infrastructure;
-using WebApplication1.Repositories;
+using Backend_TeaTech.Infrastructure;
+using Backend_TeaTech.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Npgsql.EntityFrameworkCore.PostgreSQL;
-using Interfaces.Repositories;
-using WebApplication1.Interfaces.Services;
-using WebApplication1.Services;
+using Backend_TeaTech.Interfaces.Services;
+using Backend_TeaTech.Services;
+using Backend_TeaTech.Interfaces.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +25,8 @@ builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IResponsibleService, ResponsibleService>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IChildAssistedService, ChildAssistedService>();
+builder.Services.AddTransient<IEmployeeService, EmployeeService>();
+builder.Services.AddTransient<IEmployeeRepository, EmployeeRepository>();
 
 // Add services to the container.
 

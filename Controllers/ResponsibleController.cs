@@ -1,11 +1,8 @@
-﻿using Interfaces.Repositories;
-using Microsoft.AspNetCore.Mvc;
-using WebApplication1.Interfaces;
-using WebApplication1.Interfaces.Services;
-using WebApplication1.Models;
-using WebApplication1.Services;
+﻿using Microsoft.AspNetCore.Mvc;
+using Backend_TeaTech.Interfaces.Services;
+using Backend_TeaTech.DTO.Responsibles;
 
-namespace WebApplication1.Controllers
+namespace Backend_TeaTech.Controllers
 {
     [ApiController]
     [Route("api/responsible")]
@@ -42,5 +39,14 @@ namespace WebApplication1.Controllers
                 return StatusCode(500, "An error occurred while processing the request.");
             }
         }
+
+        [HttpPut("update/{id}")]
+
+        public IActionResult PutResponsible(Guid id, [FromBody] ResponsibleRequestDTO req)
+        {
+            return Ok("Responsible updated successfully.");
+            //Adicionar regra de negócio
+        }
+
     }
 }

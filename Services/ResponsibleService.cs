@@ -1,9 +1,11 @@
-﻿using Interfaces.Repositories;
-using WebApplication1.Interfaces.Services;
-using WebApplication1.Models;
-using WebApplication1.Repositories;
+﻿using Backend_TeaTech.Interfaces.Services;
+using Backend_TeaTech.Models;
+using Backend_TeaTech.Repositories;
+using Backend_TeaTech.Interfaces.Repositories;
+using Backend_TeaTech.DTO.Responsibles;
+using Backend_TeaTech.DTO.Users;
 
-namespace WebApplication1.Services
+namespace Backend_TeaTech.Services
 {
     public class ResponsibleService : IResponsibleService
     {
@@ -36,20 +38,7 @@ namespace WebApplication1.Services
         {
             var responsibles = _responsibleRepository.GetAll();
 
-            List<ResponsibleDTO> responsibleDTO = responsibles.Select(responsible => new ResponsibleDTO
-            {
-                Id = responsible.Id,
-                NameResponsibleOne = responsible.NameResponsibleOne,
-                ResponsibleKinshipOne = responsible.ResponsibleKinshipOne,
-                ResponsibleCpfOne = responsible.ResponsibleCpfOne,
-                ContactOne = responsible.ContactOne,
-                NameResponsibleTwo = responsible.NameResponsibleTwo,
-                ResponsibleKinshipTwo = responsible.ResponsibleKinshipTwo,
-                ResponsibleCpfTwo = responsible.ResponsibleCpfTwo,
-                ContactTwo = responsible.ContactTwo,
-                User = responsible.User,
-                
-            }).ToList();
+            List<ResponsibleDTO> responsibleDTO = responsibles.Select(responsible => new ResponsibleDTO(responsible)).ToList();
 
             return responsibleDTO;
         }

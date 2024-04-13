@@ -1,42 +1,44 @@
-﻿using Backend_TeaTech.Infrastructure;
+﻿using Backend_TeaTech.Interfaces.Repositories;
+using Microsoft.EntityFrameworkCore;
+using Backend_TeaTech.Infrastructure;
 using Backend_TeaTech.Models;
-using Backend_TeaTech.Interfaces.Repositories;
 
 namespace Backend_TeaTech.Repositories
 {
-    public class UserRepository : IUserRepository
+    public class EmployeeRepository : IEmployeeRepository
     {
-        private readonly ConnectionContext _connectionContextUser;
+        private readonly ConnectionContext _connectionContext;
 
-        public UserRepository(ConnectionContext context)
+        public EmployeeRepository(ConnectionContext context)
         {
-            _connectionContextUser = context;
+            _connectionContext = context;
         }
-        public User Add(User user)
+
+        public Employee Add(Employee employee)
         {
             try
             {
-                var userAdd = _connectionContextUser.Users.Add(user).Entity;
-                _connectionContextUser.SaveChanges();
-                return userAdd;
-            }catch (Exception ex)
+                var employeeAdd = _connectionContext.Employees.Add(employee).Entity;
+                _connectionContext.SaveChanges();
+                return employeeAdd;
+            }
+            catch (Exception ex)
             {
                 throw new Exception("Internal database error - Message: " + ex.Message);
             }
-
         }
 
-        public void DeleteById(Guid id)
+        public void DeleteByID(Guid id)
         {
             try
             {
-                User? user = this.GetById(id);
-                if (user != null)
+                Employee? employee = this.GetByID(id);
+                if (employee != null)
                 {
                     try
                     {
-                        _connectionContextUser.Users.Remove(user);
-                        _connectionContextUser.SaveChanges();
+                        _connectionContext.Employees.Remove(employee);
+                        _connectionContext.SaveChanges();
                     }
                     catch (Exception ex)
                     {
@@ -46,7 +48,7 @@ namespace Backend_TeaTech.Repositories
                 }
                 else
                 {
-                    throw new Exception("User was not found");
+                    throw new Exception("Employee was not found");
                 }
             }
             catch (Exception ex)
@@ -55,41 +57,29 @@ namespace Backend_TeaTech.Repositories
             }
         }
 
-        public List<User> GetAll()
+        public List<Employee> GetAll()
         {
             try
             {
-                return _connectionContextUser.Users.ToList();
-            }catch (Exception ex)
+                return _connectionContext.Employees.Include(e => e.User).ToList();
+            }
+            catch (Exception ex)
             {
                 throw new Exception("Internal database error - Message: " + ex.Message);
             }
-            
         }
 
-        public User GetByEmail(string email)
-        {
-            try
-            {
-                return _connectionContextUser.Users.FirstOrDefault(user => user.Email == email);
-            }catch (Exception ex)
-            {
-                throw new Exception("Internal database error - Message: " + ex.Message);
-            }
-            
-        }
-
-        public User? GetById(Guid id)
+        public Employee GetByID(Guid id)
         {
             try
             {
                 try
                 {
-                    User? user = _connectionContextUser.Users.Find(id);
-
-                    if (user != null)
+                    Employee? employee = _connectionContext.Employees.Include(e => e.User)
+                                                                     .FirstOrDefault(c => c.Id.Equals(id));
+                    if (employee != null)
                     {
-                        return user;
+                        return employee;
                     }
                     else
                     {
@@ -108,17 +98,17 @@ namespace Backend_TeaTech.Repositories
             }
         }
 
-        public User Update(User user)
+        public Employee Update(Employee employee)
         {
             try
             {
-                if (this.GetById(user.Id) != null)
+                if (this.GetByID(employee.Id) != null)
                 {
                     try
                     {
-                        User userUpdated = _connectionContextUser.Users.Update(user).Entity;
-                        _connectionContextUser.SaveChanges();
-                        return userUpdated;
+                        Employee employeeUpdated = _connectionContext.Employees.Update(employee).Entity;
+                        _connectionContext.SaveChanges();
+                        return employeeUpdated;
                     }
                     catch (Exception ex)
                     {
@@ -128,7 +118,7 @@ namespace Backend_TeaTech.Repositories
                 }
                 else
                 {
-                    throw new Exception("User was not found");
+                    throw new Exception("Employee was not found");
                 }
             }
             catch (Exception ex)
