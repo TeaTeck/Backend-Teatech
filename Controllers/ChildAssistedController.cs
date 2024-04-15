@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Backend_TeaTech.DTO.ChildAssisted;
+using Backend_TeaTech.DTO.ChildAssisteds;
 using Backend_TeaTech.Interfaces.Services;
 using Backend_TeaTech.Models;
 
@@ -12,12 +12,15 @@ namespace Backend_TeaTech.Controllers
         private readonly IUserService _userService;
         private readonly IChildAssistedService _childAssistedService;
         private readonly IResponsibleService _responsibleService;
+        private readonly IPreAnalysisService _preAnalysisService;
 
-        public ChildAssistedController(IUserService userService, IChildAssistedService childAssistedService, IResponsibleService responsibleService)
+        public ChildAssistedController(IUserService userService, IChildAssistedService childAssistedService, IResponsibleService responsibleService, IPreAnalysisService preAnalysisService)
         {
             _userService = userService;
             _childAssistedService = childAssistedService;
             _responsibleService = responsibleService;
+            _preAnalysisService = preAnalysisService;
+            
         }
 
         [HttpPost("add")]
@@ -37,8 +40,12 @@ namespace Backend_TeaTech.Controllers
                 Responsible responsible = new Responsible(req.NameResponsibleOne, req.ResponsibleCpfOne, req.ResponsibleKinshipOne, req.NameResponsibleTwo, req.ResponsibleKinshipTwo, req.ResponsibleCpfTwo, req.ContactOne, req.ContactTwo, userResponsible);
                 responsible = _responsibleService.CreateResponsible(responsible);
 
-                var childAssited = new ChildAssisted(req.Name, req.BirthDate.ToUniversalTime(), req.FoodSelectivity, req.Aversions, req.Preferences, req.MedicalRecord, req.Photo, responsible);
+                ChildAssisted childAssited = new ChildAssisted(req.Name, req.BirthDate.ToUniversalTime(), req.FoodSelectivity, req.Aversions, req.Preferences, req.MedicalRecord, req.Photo, responsible);
                 childAssited = _childAssistedService.CreateChild(childAssited);
+
+                PreAnalysis preAnalysis = new PreAnalysis(childAssited);
+                preAnalysis = _preAnalysisService.CreatePreAnalysis(preAnalysis);
+
                 return Ok();
             }
             catch (Exception ex)

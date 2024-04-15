@@ -1,4 +1,4 @@
-﻿using Backend_TeaTech.DTO.ChildAssisted;
+﻿using Backend_TeaTech.DTO.ChildAssisteds;
 using Backend_TeaTech.Models;
 
 namespace Backend_TeaTech.Interfaces.Services

@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Backend_TeaTech.DTO.Employee;
+using Backend_TeaTech.DTO.Employees;
 using Backend_TeaTech.DTO.Users;
 using Backend_TeaTech.Interfaces.Services;
 using Backend_TeaTech.Models;
@@ -25,7 +25,7 @@ namespace Backend_TeaTech.Controllers
             try
             {
                 User userEmployee = new User(req.Email, req.Cpf);
-                UserDTO userEmployeedto = _userService.CreateUserEmployee(userEmployee);
+                userEmployee = _userService.CreateUserEmployee(userEmployee);
 
                 Employee employee = new Employee(req.Name, req.Cpf, req.OccupationType, userEmployee);
                 employee = _employeeService.CreateEmployee(employee);

@@ -1,7 +1,8 @@
 ﻿using Backend_TeaTech.DTO.Users;
 using Backend_TeaTech.Enum;
+using Backend_TeaTech.Models;
 
-namespace Backend_TeaTech.DTO.Employee
+namespace Backend_TeaTech.DTO.Employees
 {
     public class EmployeeDTO
     {
@@ -15,6 +16,12 @@ namespace Backend_TeaTech.DTO.Employee
             Name = name;
             OccupationType = occupationType;
             User = user;
+        }
+        public EmployeeDTO(Employee employee)
+        {
+            Name = employee.Name;
+            OccupationType = employee.OccupationType;
+            User = employee.User != null ? new UserDTO(employee.User) : null;
         }
     }
 }

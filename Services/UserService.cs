@@ -37,7 +37,7 @@ namespace Backend_TeaTech.Services
             return createdUser;
         }
 
-        public UserDTO CreateUserEmployee(User user)
+        public User CreateUserEmployee(User user)
          {
             var existingUser = _userRepository.GetByEmail(user.Email);
 
@@ -54,14 +54,7 @@ namespace Backend_TeaTech.Services
 
             var createdUser = _userRepository.Add(user);
 
-            UserDTO userDTO = new UserDTO
-            {
-                Id = createdUser.Id,
-                Email = createdUser.Email,
-                UserType = createdUser.UserType
-            };
-
-            return userDTO;
+            return createdUser;
         }
         public List<UserDTO> ListAllUser()
         {

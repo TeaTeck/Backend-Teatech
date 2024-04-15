@@ -3,7 +3,7 @@ using Backend_TeaTech.Interfaces.Services;
 using Backend_TeaTech.Models;
 using Backend_TeaTech.Repositories;
 using Backend_TeaTech.Interfaces.Repositories;
-using Backend_TeaTech.DTO.ChildAssisted;
+using Backend_TeaTech.DTO.ChildAssisteds;
 
 namespace Backend_TeaTech.Services
 {
@@ -30,7 +30,7 @@ namespace Backend_TeaTech.Services
             }
             else
             {
-                throw new ArgumentException("User not found.");
+                throw new ArgumentException("Child not found.");
             }
         }
 
@@ -52,7 +52,7 @@ namespace Backend_TeaTech.Services
                 var childAssisted = _childAssistedRepository.GetById(id);
                 if (childAssisted == null)
                 {
-                    throw new ArgumentException($"Criança com o ID {id} não encontrada.");
+                    throw new ArgumentException($"Child with ID {id} not found.");
                 }
                 return childAssisted;
             }

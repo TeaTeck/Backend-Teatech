@@ -1,5 +1,6 @@
-﻿
-namespace Backend_TeaTech.DTO.ChildAssisted
+﻿using Backend_TeaTech.Models;
+
+namespace Backend_TeaTech.DTO.ChildAssisteds
 {
     public class ChildAssistedDTO
     {
@@ -17,8 +18,10 @@ namespace Backend_TeaTech.DTO.ChildAssisted
             Name = name;
             Email = email;
             Contact = contact;
-
-
+        }
+        public ChildAssistedDTO(ChildAssisted childAssisted)
+        {
+            Name = childAssisted.Name;
         }
     }
 }

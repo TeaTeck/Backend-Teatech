@@ -1,4 +1,4 @@
-﻿using Backend_TeaTech.DTO.Employee;
+﻿using Backend_TeaTech.DTO.Employees;
 using Backend_TeaTech.Models;
 
 namespace Backend_TeaTech.Interfaces.Services

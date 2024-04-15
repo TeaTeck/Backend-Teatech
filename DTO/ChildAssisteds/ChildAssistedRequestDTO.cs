@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace Backend_TeaTech.DTO.ChildAssisted
+namespace Backend_TeaTech.DTO.ChildAssisteds
 {
     public class ChildAssistedRequestDTO
     {

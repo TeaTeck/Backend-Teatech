@@ -1,6 +1,6 @@
 ﻿using Backend_TeaTech.Enum;
 
-namespace Backend_TeaTech.DTO.Employee
+namespace Backend_TeaTech.DTO.Employees
 {
     public class EmployeeRequestDTO
     {

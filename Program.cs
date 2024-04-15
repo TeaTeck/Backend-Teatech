@@ -27,6 +27,8 @@ builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IChildAssistedService, ChildAssistedService>();
 builder.Services.AddTransient<IEmployeeService, EmployeeService>();
 builder.Services.AddTransient<IEmployeeRepository, EmployeeRepository>();
+builder.Services.AddTransient<IPreAnalysisRepository, PreAnalysisRepository>();
+builder.Services.AddTransient<IPreAnalysisService, PreAnalysisService>();
 
 // Add services to the container.
 

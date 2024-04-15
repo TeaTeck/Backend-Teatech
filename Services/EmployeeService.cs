@@ -1,4 +1,4 @@
-﻿using Backend_TeaTech.DTO.Employee;
+﻿using Backend_TeaTech.DTO.Employees;
 using Backend_TeaTech.DTO.Responsibles;
 using Backend_TeaTech.DTO.Users;
 using Backend_TeaTech.Interfaces.Repositories;
@@ -41,7 +41,7 @@ namespace Backend_TeaTech.Services
                 var employee = _employeeRepository.GetByID(id);
                 if (employee == null)
                 {
-                    throw new ArgumentException($"Employee com o ID {id} não encontrada.");
+                    throw new ArgumentException($"Employee with ID {id} not found.");
                 }
                 return employee;
             }
