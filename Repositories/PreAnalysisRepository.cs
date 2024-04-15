@@ -64,6 +64,8 @@ namespace Backend_TeaTech.Repositories
             {
                 return _connectionContext.PreAnalysiss.Include(p => p.Employee)
                                                       .Include(p => p.ChildAssisted)
+                                                      .Include(p => p.ChildAssisted.Responsible)
+                                                      .Include(p => p.ChildAssisted.Responsible.User)
                                                       .ToList();
             }
             catch (Exception ex)

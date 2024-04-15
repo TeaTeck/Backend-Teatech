@@ -1,4 +1,5 @@
 ﻿using Backend_TeaTech.Models;
+using System.Xml.Linq;
 
 namespace Backend_TeaTech.DTO.ChildAssisteds
 {
@@ -21,7 +22,10 @@ namespace Backend_TeaTech.DTO.ChildAssisteds
         }
         public ChildAssistedDTO(ChildAssisted childAssisted)
         {
+            Id = childAssisted.Id;
             Name = childAssisted.Name;
+            Email = childAssisted.Responsible.User.Email;
+            Contact = childAssisted.Responsible.ContactOne;
         }
     }
 }
