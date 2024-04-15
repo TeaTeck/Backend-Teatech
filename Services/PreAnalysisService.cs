@@ -60,6 +60,8 @@ namespace Backend_TeaTech.Services
             {
                 preAnalysisUpdate.Employee = employee;
 
+                preAnalysisUpdate.StatusCode = Enum.StatusCode.Completed;
+
                 _preAnalysisRepository.Update(preAnalysisUpdate);
 
             }
