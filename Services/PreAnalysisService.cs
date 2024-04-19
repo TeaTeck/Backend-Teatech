@@ -1,6 +1,5 @@
 ﻿using Backend_TeaTech.DTO.ChildAssisteds;
 using Backend_TeaTech.DTO.Employees;
-using Backend_TeaTech.DTO.PreAnalysis;
 using Backend_TeaTech.DTO.PreAnalysiss;
 using Backend_TeaTech.Interfaces.Repositories;
 using Backend_TeaTech.Interfaces.Services;
@@ -113,7 +112,7 @@ namespace Backend_TeaTech.Services
                 Protocol = preAnalysis.Protocol,
                 StatusCode = preAnalysis.StatusCode,
                 Employee = preAnalysis.Employee != null ? new EmployeeDTO(preAnalysis.Employee) : null,
-                ChildAssisted = preAnalysis.ChildAssisted != null ? new ChildAssistedDTO(preAnalysis.ChildAssisted) : null,
+                ChildAssisted = preAnalysis.ChildAssisted != null ? new ChildAssistedDTO(preAnalysis.ChildAssisted, preAnalysis) : null,
 
             }).ToList();
 

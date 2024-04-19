@@ -9,6 +9,7 @@ namespace Backend_TeaTech.Interfaces.Repositories
         void DeleteById(Guid id);
         PreAnalysis GetById(Guid id);
         List<PreAnalysis> GetAll();
+        PreAnalysis? GetByChildAssistedId(Guid id);
 
     }
 }

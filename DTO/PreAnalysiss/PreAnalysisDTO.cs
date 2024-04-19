@@ -3,7 +3,7 @@ using Backend_TeaTech.DTO.Employees;
 using Backend_TeaTech.Models;
 using Backend_TeaTech.Enum;
 
-namespace Backend_TeaTech.DTO.PreAnalysis
+namespace Backend_TeaTech.DTO.PreAnalysiss
 {
     public class PreAnalysisDTO
     {

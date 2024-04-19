@@ -10,9 +10,11 @@ namespace Backend_TeaTech.Services
     public class ChildAssistedService : IChildAssistedService
     {
         private readonly IChildAssistedRepository _childAssistedRepository;
-        public ChildAssistedService(IChildAssistedRepository childAssistedRepository)
+        private readonly IPreAnalysisRepository _preAnalysisRepository;
+        public ChildAssistedService(IChildAssistedRepository childAssistedRepository, IPreAnalysisRepository preAnalysisRepository)
         {
             _childAssistedRepository = childAssistedRepository;
+            _preAnalysisRepository = preAnalysisRepository;
         }
         public ChildAssisted CreateChild(ChildAssisted childAssisted)
         {
@@ -34,15 +36,24 @@ namespace Backend_TeaTech.Services
             }
         }
 
-        public List<ChildAssistedDTO> FilterByData(string data)
+        public ListChildAssistedDTO FilterByData(string data, int pageNumber, int pageSize, string orderBy, string orderDirection)
         {
-            var childs = _childAssistedRepository.GetByData(data);
+            var childs = _childAssistedRepository.GetByData(data, pageNumber, pageSize, orderBy, orderDirection);
 
             List<ChildAssistedDTO> childAssistedDTOs = new List<ChildAssistedDTO>();
 
-            childs.ForEach(child => childAssistedDTOs.Add(new ChildAssistedDTO(child.Id, child.Name, child.Responsible.User.Email, child.Responsible.ContactOne)));
+            childs.ForEach(child => {
+                PreAnalysis? preAnalysis = _preAnalysisRepository.GetByChildAssistedId(child.Id);
+                childAssistedDTOs.Add(new ChildAssistedDTO(child, preAnalysis));
+            });
 
-            return childAssistedDTOs;
+            int totalChildAssisteds = _childAssistedRepository.CountAllChildAssisted();
+
+            int totalPages = (int)Math.Ceiling((double)totalChildAssisteds / pageSize);
+
+            ListChildAssistedDTO listChildAssistedDTO = new ListChildAssistedDTO(childAssistedDTOs, totalPages, pageNumber);
+
+            return listChildAssistedDTO;
         }
 
         public ChildAssisted GetChildById(Guid id)

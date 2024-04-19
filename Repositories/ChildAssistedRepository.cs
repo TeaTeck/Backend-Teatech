@@ -2,6 +2,7 @@
 using Backend_TeaTech.Infrastructure;
 using Backend_TeaTech.Models;
 using Backend_TeaTech.Interfaces.Repositories;
+using System.Linq.Dynamic.Core;
 
 namespace Backend_TeaTech.Repositories
 {
@@ -125,23 +126,42 @@ namespace Backend_TeaTech.Repositories
                 throw new Exception(ex.Message);
             }
         }
-
-        public List<ChildAssisted> GetByData(string data)
+        public int CountAllChildAssisted()
+        {
+            try
+            {
+                return _connectionContext.ChildAssisteds.Count();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Internal database error - Message: " + ex.Message);
+            }
+        }
+        public List<ChildAssisted> GetByData(string data, int pageNumber, int pageSize, string orderBy, string orderDirection)
         {
             try
             {
                 data = data.ToLower();
-                return _connectionContext.ChildAssisteds.Include(c => c.Responsible)
-                                                        .Include(c => c.Responsible.User)
-                                                        .Where(c => c.Name.ToLower().Contains(data) || 
-                                                                    c.Responsible.NameResponsibleOne.ToLower().Contains(data) || 
-                                                                    c.Responsible.NameResponsibleTwo.ToLower().Contains(data) || 
-                                                                    c.Responsible.ResponsibleCpfOne.ToLower().Contains(data) || 
-                                                                    c.Responsible.ResponsibleCpfTwo.ToLower().Contains(data) ||
-                                                                    c.Responsible.ContactOne.ToLower().Contains(data) ||
-                                                                    c.Responsible.ContactTwo.ToLower().Contains(data) ||
-                                                                    c.Responsible.User.Email.ToLower().Contains(data))
-                                                        .ToList();
+                var query = _connectionContext.ChildAssisteds
+                                              .Include(c => c.Responsible)
+                                              .Include(c => c.Responsible.User)
+                                              .Where(c => c.Name.ToLower().Contains(data) ||
+                                                          c.Responsible.NameResponsibleOne.ToLower().Contains(data) ||
+                                                          c.Responsible.NameResponsibleTwo.ToLower().Contains(data) ||
+                                                          c.Responsible.ResponsibleCpfOne.ToLower().Contains(data) ||
+                                                          c.Responsible.ResponsibleCpfTwo.ToLower().Contains(data) ||
+                                                          c.Responsible.ContactOne.ToLower().Contains(data) ||
+                                                          c.Responsible.ContactTwo.ToLower().Contains(data) ||
+                                                          c.Responsible.User.Email.ToLower().Contains(data));
+
+                if (!string.IsNullOrEmpty(orderBy))
+                {
+                    query = query.OrderBy(orderBy + " " + orderDirection);
+                }
+
+                return query.Skip((pageNumber - 1) * pageSize)
+                            .Take(pageSize)
+                            .ToList();
             }
             catch (Exception ex)
             {

@@ -56,11 +56,11 @@ namespace Backend_TeaTech.Controllers
         }
 
         [HttpGet("filterByData")]
-        public IActionResult FilterByData(string data = "")
+        public IActionResult FilterByData(string data = "", int pageNumber = 1, int pageSize = 10, string orderBy = "Name", string orderDirection = "asc")
         {
             try
             {
-                var filteredUsers = _childAssistedService.FilterByData(data);
+                var filteredUsers = _childAssistedService.FilterByData(data, pageNumber, pageSize, orderBy, orderDirection);
                 return Ok(filteredUsers);
             }
             catch (Exception ex)

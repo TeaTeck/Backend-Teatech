@@ -132,5 +132,33 @@ namespace Backend_TeaTech.Repositories
                 throw new Exception(ex.Message);
             }
         }
+
+        public PreAnalysis? GetByChildAssistedId(Guid id)
+        {
+            try
+            {
+                PreAnalysis? preAnalysis = _connectionContext.PreAnalysiss.FirstOrDefault(pa => pa.ChildAssisted.Id == id);
+                if (preAnalysis != null)
+                {
+                    try
+                    {
+                        return preAnalysis;
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception("Internal database error - Message: " + ex.Message);
+                    }
+
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

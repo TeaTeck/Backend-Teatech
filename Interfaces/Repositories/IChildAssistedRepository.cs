@@ -9,6 +9,7 @@ namespace Backend_TeaTech.Interfaces.Repositories
         void DeleteById(Guid id);
         ChildAssisted? GetById(Guid id);
         ChildAssisted Update(ChildAssisted childAssisted);
-        List<ChildAssisted> GetByData(string data);
+        int CountAllChildAssisted();
+        List<ChildAssisted> GetByData(string data, int pageNumber, int pageSize, string orderBy, string orderDirection);
     }
 }

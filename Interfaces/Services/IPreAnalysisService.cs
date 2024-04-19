@@ -1,5 +1,4 @@
-﻿using Backend_TeaTech.DTO.PreAnalysis;
-using Backend_TeaTech.DTO.PreAnalysiss;
+﻿using Backend_TeaTech.DTO.PreAnalysiss;
 using Backend_TeaTech.Models;
 
 namespace Backend_TeaTech.Interfaces.Services

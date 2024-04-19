@@ -1,31 +1,30 @@
-﻿using Backend_TeaTech.Models;
+﻿using Backend_TeaTech.Enum;
+using Backend_TeaTech.Models;
 using System.Xml.Linq;
 
 namespace Backend_TeaTech.DTO.ChildAssisteds
 {
     public class ChildAssistedDTO
     {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public string Contact { get; set; }
+        public Guid? Id { get; set; }
+        public string? Name { get; set; }
+        public string? Email { get; set; }
+        public string? Contact { get; set; }
+        public Guid? PreAnalysisId { get; set; }
+        public StatusCode? PreAnalysisStatusCode { get; set; }
 
         public ChildAssistedDTO()
         {
         }
-        public ChildAssistedDTO(Guid id, string name, string email, string contact)
+
+        public ChildAssistedDTO(ChildAssisted childAssisted, PreAnalysis? preAnalysis)
         {
-            Id = id;
-            Name = name;
-            Email = email;
-            Contact = contact;
-        }
-        public ChildAssistedDTO(ChildAssisted childAssisted)
-        {
-            Id = childAssisted.Id;
-            Name = childAssisted.Name;
-            Email = childAssisted.Responsible.User.Email;
-            Contact = childAssisted.Responsible.ContactOne;
+            Id = childAssisted?.Id;
+            Name = childAssisted?.Name;
+            Email = childAssisted?.Responsible?.User?.Email;
+            Contact = childAssisted?.Responsible?.ContactOne;
+            PreAnalysisId = preAnalysis?.Id;
+            PreAnalysisStatusCode = preAnalysis?.StatusCode;
         }
     }
 }

@@ -7,7 +7,7 @@ namespace Backend_TeaTech.Interfaces.Services
     {
         ChildAssisted CreateChild(ChildAssisted childAssisted);
         void DeleteChildById(Guid id);
-        List<ChildAssistedDTO> FilterByData(string data);
+        ListChildAssistedDTO FilterByData(string data, int pageNumber, int pageSize, string orderBy, string orderDirection);
         ChildAssisted GetChildById(Guid id);
 
     }
