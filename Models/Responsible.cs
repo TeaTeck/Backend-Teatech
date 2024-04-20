@@ -36,11 +36,11 @@ namespace Backend_TeaTech.Models
         public string? ResponsibleCpfTwo { get;  set; }
 
         [Column("contact_one")]
-        [StringLength(11)]
+        [StringLength(20)]
         public string? ContactOne { get; set; }
 
         [Column("contact_two")]
-        [StringLength(11)]
+        [StringLength(20)]
         public string? ContactTwo { get; set; }
 
         [ForeignKey("fk_user_id")]
