@@ -51,5 +51,28 @@ namespace Backend_TeaTech.Controllers
                 return StatusCode(500, "An error occurred while processing the request.");
             }
         }
+
+        [HttpGet("{id}")]
+        public IActionResult GetPreAnalysisById(Guid id)
+        {
+            try
+            {
+                var user = _preAnalysisService.GetPreAnalysisById(id);
+                if (user == null)
+                {
+                    return NotFound("Pre-Analysis not found.");
+                }
+                return Ok(user);
+            }
+            catch (ArgumentException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred while processing the request." + ex);
+            }
+
+        }
     }
 }

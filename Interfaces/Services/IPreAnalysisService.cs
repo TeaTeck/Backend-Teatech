@@ -9,7 +9,7 @@ namespace Backend_TeaTech.Interfaces.Services
         PreAnalysis UpdatePreAnalysis (Guid id, PreAnalysisRequestDTO preAnalysis);
         void DeletePreAnalysisById (Guid id);
         List<PreAnalysisDTO> ListAllPreAnalysis();
-        PreAnalysis GetPreAnalysisById (Guid id);
+        PreAnalysisDTO GetPreAnalysisById (Guid id);
 
     }
 }

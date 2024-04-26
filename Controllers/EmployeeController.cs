@@ -62,5 +62,29 @@ namespace Backend_TeaTech.Controllers
                 return StatusCode(500, "An error occurred while processing the request.");
             }
         }
+
+        [HttpGet("{id}")]
+        public IActionResult GetEmployeeById(Guid id)
+        {
+            try
+            {
+                var employee = _employeeService.GetEmployeeById(id);
+                if (employee == null)
+                {
+                    return NotFound("Employee not found.");
+                }
+                return Ok(employee);
+            }
+            catch (ArgumentException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred while processing the request." + ex);
+            }
+
+        }
+
     }
 }

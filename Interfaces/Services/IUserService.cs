@@ -10,6 +10,7 @@ namespace Backend_TeaTech.Interfaces.Services
         string Login(string email, string password);
         List<UserDTO> ListAllUser();
         void DeleteUserById(Guid id);
+        UserDTO GetUserById(Guid id);
     }
 }
 

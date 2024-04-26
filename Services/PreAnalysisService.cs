@@ -1,6 +1,7 @@
 ﻿using Backend_TeaTech.DTO.ChildAssisteds;
 using Backend_TeaTech.DTO.Employees;
 using Backend_TeaTech.DTO.PreAnalysiss;
+using Backend_TeaTech.DTO.Users;
 using Backend_TeaTech.Interfaces.Repositories;
 using Backend_TeaTech.Interfaces.Services;
 using Backend_TeaTech.Models;
@@ -82,7 +83,7 @@ namespace Backend_TeaTech.Services
             }
         }
 
-        public PreAnalysis GetPreAnalysisById(Guid id)
+        public PreAnalysisDTO GetPreAnalysisById(Guid id)
         {
             try
             {
@@ -91,11 +92,54 @@ namespace Backend_TeaTech.Services
                 {
                     throw new ArgumentException($"Pre Analysis with ID {id} not found.");
                 }
-                return preAnalysis;
+
+                var childDTO = new ChildAssistedDTO
+                {
+                    Id = preAnalysis.ChildAssisted.Id,
+                    Name = preAnalysis.ChildAssisted.Name,
+                    Contact = preAnalysis.ChildAssisted.Responsible.ContactOne,
+                    Email = preAnalysis.ChildAssisted.Responsible.User.Email,
+                    PreAnalysisId = preAnalysis.ChildAssisted.Id,
+                    PreAnalysisStatusCode = preAnalysis.StatusCode,
+                };
+
+                var userDTO = new UserDTO
+                {
+                    Id = preAnalysis.Employee.User.Id,
+                    Email = preAnalysis.Employee.User.Email,
+                    UserType = preAnalysis.Employee.User.UserType,
+                };
+
+                var employeeDTO = new EmployeeDTO
+                {
+                    Id = preAnalysis.Employee.Id,
+                    Name = preAnalysis.Employee.Name,
+                    OccupationType = preAnalysis.Employee.OccupationType,
+                    User = userDTO,
+                };
+
+                var preAnalysisDTO = new PreAnalysisDTO
+                {
+                    Id = preAnalysis.Id,
+                    ProposedActivity = preAnalysis.ProposedActivity,
+                    FinalDuration = preAnalysis.FinalDuration,
+                    IdentifiedSkills = preAnalysis.IdentifiedSkills,
+                    Protocol = preAnalysis.Protocol,
+                    StatusCode = preAnalysis.StatusCode,
+                    Employee = employeeDTO,
+                    ChildAssisted = childDTO,
+
+                };
+
+                return preAnalysisDTO;
+            }
+            catch (ArgumentException)
+            {
+                throw;
             }
             catch (Exception ex)
             {
-                throw new Exception("", ex);
+                throw new Exception("Error while getting pre-analysis by ID", ex);
             }
         }
 

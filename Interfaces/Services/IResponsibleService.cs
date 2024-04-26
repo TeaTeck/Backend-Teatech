@@ -9,5 +9,6 @@ namespace Backend_TeaTech.Interfaces.Services
         Responsible CreateResponsible(Responsible responsible);
         List<ResponsibleDTO> ListAllResponsible();
         void DeleteResponsibleById(Guid id);
+        ResponsibleDTO GetResponsibleById(Guid id);
     }
 }

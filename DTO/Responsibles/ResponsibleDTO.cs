@@ -1,5 +1,7 @@
 ﻿using Backend_TeaTech.DTO.Users;
+using Backend_TeaTech.Enum;
 using Backend_TeaTech.Models;
+using System.Xml.Linq;
 
 namespace Backend_TeaTech.DTO.Responsibles
 {
@@ -19,6 +21,20 @@ namespace Backend_TeaTech.DTO.Responsibles
 
         public ResponsibleDTO()
         {
+        }
+
+        public ResponsibleDTO(Guid id, string nameResponsibleOne, string responsibleKinshipOne, string responsibleCpfOne, string nameResponsibleTwo, string responsibleKinshipTwo, string responsibleCpfTwo, string contactOne, string contactTwo,  UserDTO? user)
+        {
+            Id = id;
+            NameResponsibleOne = nameResponsibleOne;
+            ResponsibleKinshipOne = responsibleKinshipOne;
+            ResponsibleCpfOne = responsibleCpfOne;
+            NameResponsibleTwo = nameResponsibleTwo;
+            ResponsibleKinshipTwo = responsibleKinshipTwo;
+            ResponsibleCpfTwo = responsibleCpfTwo;
+            ContactOne = contactOne;
+            ContactTwo = contactTwo;
+            User = user;
         }
         public ResponsibleDTO(Responsible responsible)
         {

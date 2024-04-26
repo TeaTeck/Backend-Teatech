@@ -43,6 +43,53 @@ namespace Backend_TeaTech.Services
             return responsibleDTO;
         }
 
+        public ResponsibleDTO GetResponsibleById(Guid id)
+        {
+            try
+            {
+                var responsible = _responsibleRepository.GetById(id);
+                if (responsible == null)
+                {
+                    throw new ArgumentException($"Responsible with ID {id} not found.");
+                }
+
+                UserDTO userDTO = null;
+                if (responsible.User != null)
+                {
+                    userDTO = new UserDTO
+                    {
+                        Id = responsible.User.Id,
+                        Email = responsible.User.Email,
+                        UserType = responsible.User.UserType,
+                    };
+                }
+
+                var responsibleDTO = new ResponsibleDTO
+                {
+                    Id = responsible.Id,
+                    NameResponsibleOne = responsible.NameResponsibleOne,
+                    ResponsibleCpfOne = responsible.ResponsibleCpfOne,
+                    ResponsibleKinshipOne = responsible.ResponsibleKinshipOne,
+                    ContactOne = responsible.ContactOne,
+                    NameResponsibleTwo = responsible.NameResponsibleTwo,
+                    ResponsibleCpfTwo = responsible.ResponsibleCpfTwo,
+                    ResponsibleKinshipTwo = responsible.ResponsibleKinshipTwo,
+                    ContactTwo = responsible.ContactTwo,
+                    User = userDTO,
+                };
+
+                return responsibleDTO;
+            }
+            catch (ArgumentException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error while getting responsible by ID", ex);
+            }
+        }
+
 
     }
 }

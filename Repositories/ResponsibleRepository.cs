@@ -74,7 +74,8 @@ namespace Backend_TeaTech.Repositories
             {
                 try
                 {
-                    Responsible? responsible = _connectionContext.Responsibles.Find(id);
+                    Responsible? responsible = _connectionContext.Responsibles.Include(r => r.User)
+                                                                     .FirstOrDefault(c => c.Id.Equals(id));
 
                     if (responsible != null)
                     {

@@ -3,6 +3,7 @@ using Backend_TeaTech.Interfaces.Repositories;
 using Backend_TeaTech.Interfaces.Services;
 using Backend_TeaTech.lib;
 using Backend_TeaTech.Models;
+using Backend_TeaTech.Repositories;
 
 namespace Backend_TeaTech.Services
 {
@@ -99,6 +100,31 @@ namespace Backend_TeaTech.Services
             else
             {
                 throw new ArgumentException("User not found.");
+            }
+        }
+
+        public UserDTO GetUserById(Guid id)
+        {
+            try
+            {
+                var user = _userRepository.GetById(id);
+                if (user == null)
+                {
+                    throw new ArgumentException($"User with ID {id} not found.");
+                }
+
+                var userDTO = new UserDTO
+                {
+                    Id = user.Id,
+                    Email = user.Email,
+                    UserType = user.UserType,
+                };
+
+                return userDTO;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error while getting user by ID", ex);
             }
         }
     }

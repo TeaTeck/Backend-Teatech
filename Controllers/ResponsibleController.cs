@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Backend_TeaTech.Interfaces.Services;
 using Backend_TeaTech.DTO.Responsibles;
+using Backend_TeaTech.Services;
 
 namespace Backend_TeaTech.Controllers
 {
@@ -46,6 +47,29 @@ namespace Backend_TeaTech.Controllers
         {
             return Ok("Responsible updated successfully.");
             //Adicionar regra de negócio
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult GetChildById(Guid id)
+        {
+            try
+            {
+                var responsible = _responsibleService.GetResponsibleById(id);
+                if (responsible == null)
+                {
+                    return NotFound("Resposible not found.");
+                }
+                return Ok(responsible);
+            }
+            catch (ArgumentException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred while processing the request." + ex);
+            }
+
         }
 
     }

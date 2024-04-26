@@ -26,5 +26,11 @@ namespace Backend_TeaTech.DTO.ChildAssisteds
             PreAnalysisId = preAnalysis?.Id;
             PreAnalysisStatusCode = preAnalysis?.StatusCode;
         }
+
+        public ChildAssistedDTO(Guid? id, string? name)
+        {
+            Id = id;
+            Name = name;
+        }
     }
 }

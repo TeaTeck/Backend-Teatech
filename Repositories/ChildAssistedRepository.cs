@@ -74,8 +74,8 @@ namespace Backend_TeaTech.Repositories
             {
                 try
                 {
-                    ChildAssisted? childAssisted = _connectionContext.ChildAssisteds.Include(c => c.Responsible)
-                                                                                     .ThenInclude(r => r.User)
+                    ChildAssisted? childAssisted = _connectionContext.ChildAssisteds.Include(c => c.Responsible.User)
+                                                                                    
                                                                                     .FirstOrDefault(c => c.Id.Equals(id));
                     if (childAssisted != null)
                     {

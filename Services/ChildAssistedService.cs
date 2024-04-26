@@ -56,7 +56,7 @@ namespace Backend_TeaTech.Services
             return listChildAssistedDTO;
         }
 
-        public ChildAssisted GetChildById(Guid id)
+        public ChildAssistedDTO GetChildById(Guid id)
         {
             try
             {
@@ -65,11 +65,20 @@ namespace Backend_TeaTech.Services
                 {
                     throw new ArgumentException($"Child with ID {id} not found.");
                 }
-                return childAssisted;
+
+                PreAnalysis? preAnalysis = _preAnalysisRepository.GetByChildAssistedId(childAssisted.Id);
+
+                var childAssistedDTO = new ChildAssistedDTO(childAssisted, preAnalysis);
+
+                return childAssistedDTO;
+            }
+            catch (ArgumentException)
+            {
+                throw; 
             }
             catch (Exception ex)
             {
-                throw new Exception("", ex);
+                throw new Exception("Error while getting child by ID", ex);
             }
         }
     }

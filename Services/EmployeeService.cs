@@ -34,7 +34,7 @@ namespace Backend_TeaTech.Services
             }
         }
 
-        public Employee GetEmployeeById(Guid id)
+        public EmployeeDTO GetEmployeeById(Guid id)
         {
             try
             {
@@ -43,11 +43,32 @@ namespace Backend_TeaTech.Services
                 {
                     throw new ArgumentException($"Employee with ID {id} not found.");
                 }
-                return employee;
+
+                var userDTO = new UserDTO
+                {
+                    Id = employee.User.Id,
+                    Email = employee.User.Email,
+                    UserType = employee.User.UserType,
+                };
+
+                var employeeDTO = new EmployeeDTO
+                {
+                    Id = employee.Id,
+                    Name = employee.Name,
+                    OccupationType = employee.OccupationType,
+                    User = userDTO,
+    
+                };
+
+                return employeeDTO;
+            }
+            catch (ArgumentException)
+            {
+                throw; 
             }
             catch (Exception ex)
             {
-                throw new Exception("", ex);
+                throw new Exception("Error while getting employee by ID", ex);
             }
         }
 

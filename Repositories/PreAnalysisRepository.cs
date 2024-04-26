@@ -80,8 +80,8 @@ namespace Backend_TeaTech.Repositories
             {
                 try
                 {
-                    PreAnalysis? preAnalysis = _connectionContext.PreAnalysiss.Include(p => p.Employee)
-                                                                              .Include(p => p.ChildAssisted)
+                    PreAnalysis? preAnalysis = _connectionContext.PreAnalysiss.Include(p => p.Employee.User)
+                                                                              .Include(p => p.ChildAssisted.Responsible.User)
                                                                               .FirstOrDefault(c => c.Id.Equals(id));
                     if (preAnalysis != null)
                     {

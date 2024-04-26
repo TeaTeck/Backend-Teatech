@@ -8,7 +8,7 @@ namespace Backend_TeaTech.Interfaces.Services
         Employee CreateEmployee(Employee employee);
         void DeleteEmployeeById(Guid id);
         List<EmployeeDTO> ListAllEmployee();
-        Employee GetEmployeeById(Guid id);
+        EmployeeDTO GetEmployeeById(Guid id);
 
     }
 }

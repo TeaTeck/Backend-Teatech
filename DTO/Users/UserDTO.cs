@@ -8,6 +8,7 @@ namespace Backend_TeaTech.DTO.Users
         public Guid Id { get; set; }
         public string Email { get; set; }
         public UserType UserType { get; set; }
+        
         public UserDTO()
         {
         }

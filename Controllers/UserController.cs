@@ -63,5 +63,29 @@ namespace Backend_TeaTech.Controllers
             }
         }
 
+        [HttpGet("{id}")]
+        public IActionResult GetUserById(Guid id)
+        {
+            try
+            {
+                var user = _userService.GetUserById(id);
+                if (user == null)
+                {
+                    return NotFound("User not found.");
+                }
+                return Ok(user);
+            }
+            catch (ArgumentException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred while processing the request." + ex);
+            }
+
+        }
+
+
     }
 }
