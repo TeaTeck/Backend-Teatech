@@ -37,7 +37,7 @@ namespace Backend_TeaTech.Controllers
                 User userResponsible = new User(req.Email, req.ResponsibleCpfOne);
                 userResponsible = _userService.CreateUserResponsible(userResponsible);
 
-                Responsible responsible = new Responsible(req.NameResponsibleOne, req.ResponsibleCpfOne, req.ResponsibleKinshipOne, req.NameResponsibleTwo, req.ResponsibleKinshipTwo, req.ResponsibleCpfTwo, req.ContactOne, req.ContactTwo, userResponsible);
+                Responsible responsible = new Responsible(req.NameResponsibleOne, req.ResponsibleKinshipOne, req.ResponsibleCpfOne, req.NameResponsibleTwo, req.ResponsibleKinshipTwo, req.ResponsibleCpfTwo, req.ContactOne, req.ContactTwo, userResponsible);
                 responsible = _responsibleService.CreateResponsible(responsible);
 
                 ChildAssisted childAssited = new ChildAssisted(req.Name, req.BirthDate.ToUniversalTime(), req.FoodSelectivity, req.Aversions, req.Preferences, req.MedicalRecord, req.Photo, responsible);
