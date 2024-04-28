@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Backend_TeaTech.Interfaces.Services;
 using Backend_TeaTech.Services;
+using Backend_TeaTech.DTO.Users;
 
 namespace Backend_TeaTech.Controllers
 {
@@ -25,14 +26,14 @@ namespace Backend_TeaTech.Controllers
         }
 
         [HttpPost("login")]
-        public IActionResult Login(string email, string password)
+        public IActionResult Login([FromBody] UserRequestDTO req)
         {
-            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
+            if (string.IsNullOrEmpty(req.Email) || string.IsNullOrEmpty(req.Password))
             {
                 return BadRequest("Invalid login data");
             }
 
-            string token = _userService.Login(email, password);
+            string token = _userService.Login(req.Email, req.Password);
 
             if (!string.IsNullOrEmpty(token))
             {

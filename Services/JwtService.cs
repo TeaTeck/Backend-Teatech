@@ -1,11 +1,12 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Backend_TeaTech.Interfaces.Services;
+using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
 namespace Backend_TeaTech.Services
 {
-    public class JwtService
+    public class JwtService : IJwtService
     {
         private readonly string? _secretKey;
 
