@@ -2,6 +2,7 @@
 using Backend_TeaTech.Interfaces.Services;
 using Backend_TeaTech.Services;
 using Backend_TeaTech.DTO.Users;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Backend_TeaTech.Controllers
 {
@@ -10,14 +11,13 @@ namespace Backend_TeaTech.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
-        private readonly JwtService _jwtService;
 
-        public UserController(IUserService userService, JwtService jwtService)
+        public UserController(IUserService userService)
         {
             _userService = userService;
-            _jwtService = jwtService;
         }
 
+        [Authorize(Roles = "Employee:Coordinator")]
         [HttpGet("list")]
         public IActionResult ListAllUser()
         {
@@ -46,6 +46,7 @@ namespace Backend_TeaTech.Controllers
             }
         }
 
+        [Authorize(Roles = "Employee:Coordinator")]
         [HttpDelete("{id}")]
         public IActionResult DeleteUser(Guid id)
         {
@@ -64,6 +65,7 @@ namespace Backend_TeaTech.Controllers
             }
         }
 
+        [Authorize]
         [HttpGet("{id}")]
         public IActionResult GetUserById(Guid id)
         {

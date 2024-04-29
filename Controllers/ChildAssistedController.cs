@@ -2,6 +2,7 @@
 using Backend_TeaTech.DTO.ChildAssisteds;
 using Backend_TeaTech.Interfaces.Services;
 using Backend_TeaTech.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Backend_TeaTech.Controllers
 {
@@ -23,6 +24,7 @@ namespace Backend_TeaTech.Controllers
             
         }
 
+        [Authorize(Roles = "Employee:Coordinator")]
         [HttpPost("add")]
         public IActionResult Add([FromBody] ChildAssistedRequestDTO req)
         {
@@ -55,6 +57,7 @@ namespace Backend_TeaTech.Controllers
             
         }
 
+        [Authorize(Policy = "CoordinatorOrApplicator")]
         [HttpGet("filterByData")]
         public IActionResult FilterByData(string data = "", int pageNumber = 1, int pageSize = 10, string orderBy = "Name", string orderDirection = "asc")
         {
@@ -69,6 +72,7 @@ namespace Backend_TeaTech.Controllers
             }
         }
 
+        [Authorize(Roles = "Employee:Coordinator")]
         [HttpDelete("{id}")]
         public IActionResult DeleteChild(Guid id)
         {
@@ -86,7 +90,7 @@ namespace Backend_TeaTech.Controllers
                 return StatusCode(500, "An error occurred while processing the request.");
             }
         }
-
+        [Authorize]
         [HttpGet("{id}")]
         public IActionResult GetChildById(Guid id)
         {

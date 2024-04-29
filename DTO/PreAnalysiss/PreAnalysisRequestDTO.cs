@@ -8,15 +8,13 @@ namespace Backend_TeaTech.DTO.PreAnalysiss
         public string FinalDuration { get; set; }
         public string IdentifiedSkills { get; set; }
         public string Protocol { get; set; }
-        public Guid EmployeeId { get; set; }
         public PreAnalysisRequestDTO() { }
-        public PreAnalysisRequestDTO(string proposedActivity, string finalDuration, string identifiedSkills, string protocol, Guid employeeId)
+        public PreAnalysisRequestDTO(string proposedActivity, string finalDuration, string identifiedSkills, string protocol)
         {
             ProposedActivity = proposedActivity;
             FinalDuration = finalDuration;
             IdentifiedSkills = identifiedSkills;
-            Protocol = protocol;
-            EmployeeId = employeeId;   
+            Protocol = protocol; 
         }
     }
 }

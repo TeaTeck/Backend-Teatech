@@ -24,8 +24,9 @@ namespace Backend_TeaTech.Services
             return preAnalysisAdd;
         }
 
-        public PreAnalysis UpdatePreAnalysis(Guid id, PreAnalysisRequestDTO preAnalysis)
+        public PreAnalysis UpdatePreAnalysis(Guid id, PreAnalysisRequestDTO preAnalysis, Guid employeeId)
         {
+            
             PreAnalysis preAnalysisUpdate = _preAnalysisRepository.GetById(id);
 
             if (preAnalysisUpdate == null)
@@ -50,7 +51,7 @@ namespace Backend_TeaTech.Services
                 preAnalysisUpdate.Protocol = preAnalysis.Protocol;
             }
 
-            Employee employee = _employeeRepository.GetByID(preAnalysis.EmployeeId);
+            Employee employee = _employeeRepository.GetByID(employeeId);
 
             if (employee == null)
             {
@@ -103,12 +104,12 @@ namespace Backend_TeaTech.Services
                     PreAnalysisStatusCode = preAnalysis.StatusCode,
                 };
 
-                var userDTO = new UserDTO
+                var userDTO = preAnalysis.Employee.User != null ? new UserDTO
                 {
                     Id = preAnalysis.Employee.User.Id,
                     Email = preAnalysis.Employee.User.Email,
                     UserType = preAnalysis.Employee.User.UserType,
-                };
+                } : null;
 
                 var employeeDTO = new EmployeeDTO
                 {

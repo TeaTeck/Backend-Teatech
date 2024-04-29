@@ -2,6 +2,7 @@
 using Backend_TeaTech.Interfaces.Services;
 using Backend_TeaTech.DTO.Responsibles;
 using Backend_TeaTech.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Backend_TeaTech.Controllers
 {
@@ -16,6 +17,7 @@ namespace Backend_TeaTech.Controllers
             _responsibleService = responsibleService;
         }
 
+        [Authorize(Policy = "CoordinatorOrApplicator")]
         [HttpGet("list")]
         public IActionResult ListAllResponsible()
         {
@@ -23,6 +25,7 @@ namespace Backend_TeaTech.Controllers
             return Ok(new { message = "List retrieved successfully", reponsibles });
         }
 
+        [Authorize(Roles = "Employee:Coordinator")]
         [HttpDelete("{id}")]
         public IActionResult DeleteResponsible(Guid id)
         {
@@ -41,16 +44,17 @@ namespace Backend_TeaTech.Controllers
             }
         }
 
+        [Authorize(Roles = "CoordinatorOrResponsible")]
         [HttpPut("update/{id}")]
-
         public IActionResult PutResponsible(Guid id, [FromBody] ResponsibleRequestDTO req)
         {
             return Ok("Responsible updated successfully.");
             //Adicionar regra de negócio
         }
 
+        [Authorize]
         [HttpGet("{id}")]
-        public IActionResult GetChildById(Guid id)
+        public IActionResult GetResponsibleById(Guid id)
         {
             try
             {

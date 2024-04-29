@@ -10,8 +10,8 @@ namespace Backend_TeaTech.Services
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
-        private readonly JwtService _jwtService;
-        public UserService(IUserRepository userRepository, JwtService jwtService)
+        private readonly IJwtService _jwtService;
+        public UserService(IUserRepository userRepository, IJwtService jwtService)
         {
             _userRepository = userRepository;
             _jwtService = jwtService;
@@ -83,7 +83,7 @@ namespace Backend_TeaTech.Services
 
             if (user.Password == hashedPassword)
             {
-                string token = _jwtService.GenerateToken(user.Id.ToString(), user.Email);
+                string token = _jwtService.GenerateToken(user);
                 return token;
             }
 

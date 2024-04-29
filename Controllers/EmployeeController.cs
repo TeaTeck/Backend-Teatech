@@ -5,9 +5,11 @@ using Backend_TeaTech.Interfaces.Services;
 using Backend_TeaTech.Models;
 using Backend_TeaTech.Repositories;
 using Backend_TeaTech.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Backend_TeaTech.Controllers
 {
+    [Authorize(Roles = "Employee:Coordinator")]
     [ApiController]
     [Route("api/employee")]
     public class EmployeeController : Controller
@@ -19,6 +21,8 @@ namespace Backend_TeaTech.Controllers
             _employeeService = employeeService;
             _userService = userService;
         }
+        
+        
         [HttpPost("add")]
         public IActionResult Add([FromBody] EmployeeRequestDTO req)
         {
@@ -63,6 +67,7 @@ namespace Backend_TeaTech.Controllers
             }
         }
 
+        
         [HttpGet("{id}")]
         public IActionResult GetEmployeeById(Guid id)
         {

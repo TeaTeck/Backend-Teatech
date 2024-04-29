@@ -98,6 +98,34 @@ namespace Backend_TeaTech.Repositories
             }
         }
 
+        public Employee GetByIdUser(Guid id)
+        {
+            try
+            {
+                try
+                {
+                    Employee? employee = _connectionContext.Employees.FirstOrDefault(c => c.User.Id == id);
+                    if (employee != null)
+                    {
+                        return employee;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Internal database error - Message: " + ex.Message);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public Employee Update(Employee employee)
         {
             try
