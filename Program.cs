@@ -45,9 +45,15 @@ builder.Services.AddSwaggerGen(options =>
     options.SwaggerDoc("v1", new OpenApiInfo()
     {
         Version = "v1",
-        Title = "API Tea Tech",
-        Description = "API Tea Tech"
+        Title = "Tea Tech API",
+        Description = "This API provides endpoints for managing employees and all processes within the Tea Tech organization."
     });
+
+    var xmlFile = "Backend_TeaTech.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+
+    options.IncludeXmlComments(xmlPath);
+
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
     {
         Name = "Authorization",
@@ -55,7 +61,7 @@ builder.Services.AddSwaggerGen(options =>
         Scheme = "Bearer",
         BearerFormat = "JWT",
         In = ParameterLocation.Header,
-        Description = "Cabeçalho de autorização JWT está usando o sheme de Bearer \r\n\r\n Digite 'Bearer' antes de colocar o Token "
+        Description = "Header authorization JWT is using Bearer scheme. \r\n\r\n Type 'Bearer' before placing the Token"
     });
     options.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
@@ -71,7 +77,8 @@ builder.Services.AddSwaggerGen(options =>
             Array.Empty<string>()
         }
         
-    });       
+    });
+    
 });
 
 builder.Services.AddAuthentication(x =>
@@ -131,7 +138,10 @@ app.UseCors("AllowSpecificOrigin");
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+    });
 }
 
 app.UseHttpsRedirection();

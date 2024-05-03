@@ -4,6 +4,7 @@ using Backend_TeaTech.Models;
 using Backend_TeaTech.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 using System.Security.Claims;
 
 namespace Backend_TeaTech.Controllers
@@ -18,8 +19,19 @@ namespace Backend_TeaTech.Controllers
         {
             _preAnalysisService = preAnalysisService;
         }
+
+        /// <summary>
+        /// Update a pre-analysis.
+        /// </summary>
+        /// <remarks>
+        /// Updates a pre-analysis with the provided data.
+        /// </remarks>
         [Authorize(Roles = "Employee:Coordinator")]
         [HttpPut("update/{idPreAnalysis}")]
+        [SwaggerResponse(200, "Success")]
+        [SwaggerResponse(400, "Bad Request", typeof(string))]
+        [SwaggerResponse(401, "Unauthorized", typeof(string))]
+        [SwaggerResponse(500, "Internal Server Error", typeof(string))]
         public IActionResult Update(Guid idPreAnalysis, [FromBody] PreAnalysisRequestDTO req)
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -27,22 +39,57 @@ namespace Backend_TeaTech.Controllers
             {
                 _preAnalysisService.UpdatePreAnalysis(idPreAnalysis, req, new Guid(userId));
                 return Ok();
-            }catch (Exception ex)
+            }
+            catch (UnauthorizedAccessException)
             {
-                return BadRequest($"{ex.Message}");
-            }  
-        }
-        [Authorize(Policy = "CoordinatorOrApplicator")]
-        [HttpGet("list")]
-        public IActionResult ListAllPreAnalysis()
-        {
-            
-            var preAnalyses = _preAnalysisService.ListAllPreAnalysis();
-            return Ok(new { message = "List retrieved successfully", preAnalyses });
+                return Unauthorized("You are not authorized to perform this action.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred while updating the pre-analysis: {ex.Message}");
+            }
         }
 
+        /// <summary>
+        /// List all pre-analyses.
+        /// </summary>
+        /// <remarks>
+        /// Retrieves a list of all pre-analyses.
+        /// </remarks>
+        [Authorize(Policy = "CoordinatorOrApplicator")]
+        [HttpGet("list")]
+        [SwaggerResponse(200, "Success", typeof(List<PreAnalysis>))]
+        [SwaggerResponse(401, "Unauthorized", typeof(string))]
+        [SwaggerResponse(500, "Internal Server Error", typeof(string))]
+        public IActionResult ListAllPreAnalysis()
+        {
+            try
+            {
+                var preAnalyses = _preAnalysisService.ListAllPreAnalysis();
+                return Ok(new { message = "List retrieved successfully", preAnalyses });
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Unauthorized("You are not authorized to perform this action.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred while retrieving the list of pre-analyses: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Delete a pre-analysis
+        /// </summary>
+        /// <remarks>
+        /// Deletes a pre-analysis by its ID.
+        /// </remarks>
         [Authorize(Roles = "Employee:Coordinator")]
         [HttpDelete("{id}")]
+        [SwaggerResponse(200, "Success")]
+        [SwaggerResponse(400, "Bad Request", typeof(string))]
+        [SwaggerResponse(404, "Not Found", typeof(string))]
+        [SwaggerResponse(500, "Internal Server Error", typeof(string))]
         public IActionResult DeletePreAnalysis(Guid id)
         {
             try
@@ -59,8 +106,19 @@ namespace Backend_TeaTech.Controllers
                 return StatusCode(500, "An error occurred while processing the request.");
             }
         }
+
+        /// <summary>
+        /// Get a pre-analysis by ID.
+        /// </summary>
+        /// <remarks>
+        /// Retrieves a pre-analysis by its ID.
+        /// </remarks>
         [Authorize(Policy = "CoordinatorOrApplicator")]
         [HttpGet("{id}")]
+        [SwaggerResponse(200, "Success", typeof(PreAnalysis))]
+        [SwaggerResponse(400, "Bad Request", typeof(string))]
+        [SwaggerResponse(404, "Not Found", typeof(string))]
+        [SwaggerResponse(500, "Internal Server Error", typeof(string))]
         public IActionResult GetPreAnalysisById(Guid id)
         {
             try
@@ -72,9 +130,9 @@ namespace Backend_TeaTech.Controllers
                 }
                 return Ok(user);
             }
-            catch (ArgumentException ex)
+            catch (UnauthorizedAccessException)
             {
-                return NotFound(ex.Message);
+                return Unauthorized("You are not authorized to perform this action.");
             }
             catch (Exception ex)
             {

@@ -3,6 +3,9 @@ using Backend_TeaTech.DTO.ChildAssisteds;
 using Backend_TeaTech.Interfaces.Services;
 using Backend_TeaTech.Models;
 using Microsoft.AspNetCore.Authorization;
+using Swashbuckle.AspNetCore.Annotations;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+
 
 namespace Backend_TeaTech.Controllers
 {
@@ -21,19 +24,22 @@ namespace Backend_TeaTech.Controllers
             _childAssistedService = childAssistedService;
             _responsibleService = responsibleService;
             _preAnalysisService = preAnalysisService;
-            
+
         }
 
+        /// <summary>
+        /// Add a new child assisted.
+        /// </summary>
+        /// <remarks>
+        /// Register a child, their guardian and responsible user.
+        /// </remarks>
         [Authorize(Roles = "Employee:Coordinator")]
         [HttpPost("add")]
+        [SwaggerResponse(200, "Success")]
+        [SwaggerResponse(400, "Bad Request", null)]
+        [SwaggerResponse(401, "Unauthorized", null)]
         public IActionResult Add([FromBody] ChildAssistedRequestDTO req)
         {
-            //Criar usuario
-            //User userResponsible = _userService.CreateUserResponsible("Passar dados")
-            //Criar responsavel
-            //Responsible responsible = _responsibleService.CreateResponsible("Passar dados do responsavel e o userResponsavel")
-            //Criar criança
-
             try
             {
                 User userResponsible = new User(req.Email, req.ResponsibleCpfOne);
@@ -50,15 +56,33 @@ namespace Backend_TeaTech.Controllers
 
                 return Ok();
             }
-            catch (Exception ex)
+            catch (ArgumentException ex)
             {
-                return BadRequest($"{ex.Message}");
+                return BadRequest(ex.Message);
             }
-            
+            catch (UnauthorizedAccessException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "An error occurred while processing the request.");
+            }
+
         }
 
+        ///   <summary>
+        ///   Filter items by data.
+        ///   </summary>
+        ///   <remarks>
+        ///   Retrieves items filtered by data from the server.
+        ///   </remarks>
         [Authorize(Policy = "CoordinatorOrApplicator")]
-        [HttpGet("filterByData")]
+        [HttpGet("filterByData")]  
+        [SwaggerResponse(200, "Success", typeof(string))]
+        [SwaggerResponse(400, "Bad Request", null)]
+        [SwaggerResponse(401, "Unauthorized", null)]
+        [SwaggerResponse(500, "Internal Server Error", null)]
         public IActionResult FilterByData(string data = "", int pageNumber = 1, int pageSize = 10, string orderBy = "Name", string orderDirection = "asc")
         {
             try
@@ -66,14 +90,33 @@ namespace Backend_TeaTech.Controllers
                 var filteredUsers = _childAssistedService.FilterByData(data, pageNumber, pageSize, orderBy, orderDirection);
                 return Ok(filteredUsers);
             }
-            catch (Exception ex)
+            catch (ArgumentException ex)
             {
-                return StatusCode(500, $"An error occurred while filtering user information: {ex.Message}");
+                return BadRequest(ex.Message);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "An error occurred while processing the request.");
             }
         }
 
+        /// <summary>
+        /// Delete a child.
+        /// </summary>
+        /// <remarks>
+        /// Deletes a child by its ID.
+        /// </remarks>
         [Authorize(Roles = "Employee:Coordinator")]
         [HttpDelete("{id}")]
+        [SwaggerResponse(200, "Success", typeof(string))]
+        [SwaggerResponse(400, "Bad Request", null)]
+        [SwaggerResponse(401, "Unauthorized", null)]
+        [SwaggerResponse(404, "Not Found", null)]
+        [SwaggerResponse(500, "Internal Server Error", null)]
         public IActionResult DeleteChild(Guid id)
         {
             try
@@ -83,15 +126,31 @@ namespace Backend_TeaTech.Controllers
             }
             catch (ArgumentException ex)
             {
-                return NotFound(ex.Message);
+                return BadRequest(ex.Message);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return Unauthorized(ex.Message);
             }
             catch (Exception)
             {
                 return StatusCode(500, "An error occurred while processing the request.");
             }
         }
+
+        /// <summary>
+        /// Get a child by ID.
+        /// </summary>
+        /// <remarks>
+        /// Retrieves a child by its ID.
+        /// </remarks>
         [Authorize]
         [HttpGet("{id}")]
+        [SwaggerResponse(200, "Success", typeof(ChildAssisted))]
+        [SwaggerResponse(400, "Bad Request", null)]
+        [SwaggerResponse(401, "Unauthorized", null)]
+        [SwaggerResponse(404, "Not Found", null)]
+        [SwaggerResponse(500, "Internal Server Error", null)]
         public IActionResult GetChildById(Guid id)
         {
             try
@@ -107,14 +166,15 @@ namespace Backend_TeaTech.Controllers
             {
                 return NotFound(ex.Message);
             }
-            catch (Exception ex)
+            catch (UnauthorizedAccessException ex)
             {
-                return StatusCode(500, "An error occurred while processing the request." + ex);
+                return Unauthorized(ex.Message);
             }
-
+            catch (Exception)
+            {
+                return StatusCode(500, "An error occurred while processing the request.");
+            }
         }
-
-
 
     }
     

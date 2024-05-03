@@ -6,6 +6,7 @@ using Backend_TeaTech.Models;
 using Backend_TeaTech.Repositories;
 using Backend_TeaTech.Services;
 using Microsoft.AspNetCore.Authorization;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Backend_TeaTech.Controllers
 {
@@ -21,9 +22,18 @@ namespace Backend_TeaTech.Controllers
             _employeeService = employeeService;
             _userService = userService;
         }
-        
-        
+
+        /// <summary>
+        /// Add a new employee.
+        /// </summary>
+        /// <remarks>
+        /// Adds a new employee with the provided data.
+        /// </remarks>
         [HttpPost("add")]
+        [SwaggerResponse(200, "Success")]
+        [SwaggerResponse(400, "Bad Request", typeof(string))]
+        [SwaggerResponse(401, "Unauthorized", null)]
+        [SwaggerResponse(500, "Internal Server Error", null)]
         public IActionResult Add([FromBody] EmployeeRequestDTO req)
         {
             try
@@ -33,23 +43,66 @@ namespace Backend_TeaTech.Controllers
 
                 Employee employee = new Employee(req.Name, req.Cpf, req.OccupationType, userEmployee);
                 employee = _employeeService.CreateEmployee(employee);
+
                 return Ok();
             }
-            catch (Exception ex) 
+            catch (ArgumentException ex)
             {
-                return BadRequest($"{ex.Message}");
+                return BadRequest(ex.Message);
             }
-            
+            catch (UnauthorizedAccessException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred while adding the employee: {ex.Message}");
+            }
         }
 
+        /// <summary>
+        /// List all employees.
+        /// </summary>
+        /// <remarks>
+        /// Retrieves a list of all employees.
+        /// </remarks>
         [HttpGet("list")]
+        [SwaggerResponse(200, "Success", typeof(List<Employee>))]
+        [SwaggerResponse(500, "Internal Server Error", typeof(string))]
+        [SwaggerResponse(400, "Bad Request", typeof(string))]
+        [SwaggerResponse(401, "Unauthorized", null)]
         public IActionResult ListAllEmployee()
         {
-            var employees = _employeeService.ListAllEmployee();
-            return Ok(new { message = "List retrieved successfully", employees });
+            try
+            {
+                var employees = _employeeService.ListAllEmployee();
+                return Ok(new { message = "List retrieved successfully", employees });
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred while retrieving the list of employees: {ex.Message}");
+            }
         }
 
+        /// <summary>
+        /// Delete an employee.
+        /// </summary>
+        /// <remarks>
+        /// Deletes an employee by its ID.
+        /// </remarks>
         [HttpDelete("{id}")]
+        [SwaggerResponse(200, "Success")]
+        [SwaggerResponse(400, "Bad Request", typeof(string))]
+        [SwaggerResponse(404, "Not Found", typeof(string))]
+        [SwaggerResponse(500, "Internal Server Error", typeof(string))]
         public IActionResult DeleteEmployee(Guid id)
         {
             try
@@ -61,14 +114,27 @@ namespace Backend_TeaTech.Controllers
             {
                 return NotFound(ex.Message);
             }
-            catch (Exception)
+            catch (UnauthorizedAccessException ex)
             {
-                return StatusCode(500, "An error occurred while processing the request.");
+                return Unauthorized(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred while deleting the employee: {ex.Message}");
             }
         }
 
-        
+        /// <summary>
+        /// Get an employee by ID.
+        /// </summary>
+        /// <remarks>
+        /// Retrieves an employee by its ID.
+        /// </remarks>
         [HttpGet("{id}")]
+        [SwaggerResponse(200, "Success", typeof(Employee))]
+        [SwaggerResponse(400, "Bad Request", typeof(string))]
+        [SwaggerResponse(404, "Not Found", typeof(string))]
+        [SwaggerResponse(500, "Internal Server Error", typeof(string))]
         public IActionResult GetEmployeeById(Guid id)
         {
             try
@@ -80,15 +146,14 @@ namespace Backend_TeaTech.Controllers
                 }
                 return Ok(employee);
             }
-            catch (ArgumentException ex)
+            catch (UnauthorizedAccessException ex)
             {
-                return NotFound(ex.Message);
+                return Unauthorized(ex.Message);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "An error occurred while processing the request." + ex);
+                return StatusCode(500, $"An error occurred while processing the request: {ex.Message}");
             }
-
         }
 
     }

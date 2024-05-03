@@ -3,6 +3,8 @@ using Backend_TeaTech.Interfaces.Services;
 using Backend_TeaTech.DTO.Responsibles;
 using Backend_TeaTech.Services;
 using Microsoft.AspNetCore.Authorization;
+using Backend_TeaTech.Models;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Backend_TeaTech.Controllers
 {
@@ -17,16 +19,46 @@ namespace Backend_TeaTech.Controllers
             _responsibleService = responsibleService;
         }
 
+        /// <summary>
+        /// List all responsibles.
+        /// </summary>
+        /// <remarks>
+        /// Retrieves a list of all responsibles.
+        /// </remarks>
         [Authorize(Policy = "CoordinatorOrApplicator")]
         [HttpGet("list")]
+        [SwaggerResponse(200, "Success", typeof(List<Responsible>))]
+        [SwaggerResponse(401, "Unauthorized", typeof(string))]
+        [SwaggerResponse(500, "Internal Server Error", typeof(string))]
         public IActionResult ListAllResponsible()
         {
-            var reponsibles = _responsibleService.ListAllResponsible();
-            return Ok(new { message = "List retrieved successfully", reponsibles });
+            try
+            {
+                var responsibles = _responsibleService.ListAllResponsible();
+                return Ok(new { message = "List retrieved successfully", responsibles });
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Unauthorized("You are not authorized to perform this action.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred while retrieving the list of responsibles: {ex.Message}");
+            }
         }
 
+        /// <summary>
+        /// Delete a responsible.
+        /// </summary>
+        /// <remarks>
+        /// Deletes a responsible by its ID.
+        /// </remarks>
         [Authorize(Roles = "Employee:Coordinator")]
         [HttpDelete("{id}")]
+        [SwaggerResponse(200, "Success")]
+        [SwaggerResponse(400, "Bad Request", typeof(string))]
+        [SwaggerResponse(404, "Not Found", typeof(string))]
+        [SwaggerResponse(500, "Internal Server Error", typeof(string))]
         public IActionResult DeleteResponsible(Guid id)
         {
             try
@@ -38,22 +70,61 @@ namespace Backend_TeaTech.Controllers
             {
                 return NotFound(ex.Message);
             }
+            catch (UnauthorizedAccessException)
+            {
+                return Unauthorized("You are not authorized to perform this action.");
+            }
             catch (Exception)
             {
                 return StatusCode(500, "An error occurred while processing the request.");
             }
         }
 
+        /// <summary>
+        /// Update a responsible.
+        /// </summary>
+        /// <remarks>
+        /// Updates a responsible with the provided data.
+        /// </remarks>
         [Authorize(Roles = "CoordinatorOrResponsible")]
         [HttpPut("update/{id}")]
+        [SwaggerResponse(200, "Success")]
+        [SwaggerResponse(400, "Bad Request", typeof(string))]
+        [SwaggerResponse(404, "Not Found", typeof(string))]
+        [SwaggerResponse(500, "Internal Server Error", typeof(string))]
         public IActionResult PutResponsible(Guid id, [FromBody] ResponsibleRequestDTO req)
         {
-            return Ok("Responsible updated successfully.");
-            //Adicionar regra de negócio
+            try
+            {
+                // Adicionar regra de negócio
+                return Ok("Responsible updated successfully.");
+            }
+            catch (ArgumentException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Unauthorized("You are not authorized to perform this action.");
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "An error occurred while processing the request.");
+            }
         }
 
+        /// <summary>
+        /// Get a responsible by ID.
+        /// </summary>
+        /// <remarks>
+        /// Retrieves a responsible by its ID.
+        /// </remarks>
         [Authorize]
         [HttpGet("{id}")]
+        [SwaggerResponse(200, "Success", typeof(Responsible))]
+        [SwaggerResponse(400, "Bad Request", typeof(string))]
+        [SwaggerResponse(404, "Not Found", typeof(string))]
+        [SwaggerResponse(500, "Internal Server Error", typeof(string))]
         public IActionResult GetResponsibleById(Guid id)
         {
             try
@@ -65,9 +136,9 @@ namespace Backend_TeaTech.Controllers
                 }
                 return Ok(responsible);
             }
-            catch (ArgumentException ex)
+            catch (UnauthorizedAccessException)
             {
-                return NotFound(ex.Message);
+                return Unauthorized("You are not authorized to perform this action.");
             }
             catch (Exception ex)
             {
