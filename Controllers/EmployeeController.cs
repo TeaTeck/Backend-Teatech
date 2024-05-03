@@ -31,9 +31,9 @@ namespace Backend_TeaTech.Controllers
         /// </remarks>
         [HttpPost("add")]
         [SwaggerResponse(200, "Success")]
-        [SwaggerResponse(400, "Bad Request", typeof(string))]
-        [SwaggerResponse(401, "Unauthorized", null)]
-        [SwaggerResponse(500, "Internal Server Error", null)]
+        [SwaggerResponse(400, "Bad Request")]
+        [SwaggerResponse(401, "Unauthorized")]
+        [SwaggerResponse(500, "Internal Server Error")]
         public IActionResult Add([FromBody] EmployeeRequestDTO req)
         {
             try
@@ -67,10 +67,10 @@ namespace Backend_TeaTech.Controllers
         /// Retrieves a list of all employees.
         /// </remarks>
         [HttpGet("list")]
-        [SwaggerResponse(200, "Success", typeof(List<Employee>))]
-        [SwaggerResponse(500, "Internal Server Error", typeof(string))]
-        [SwaggerResponse(400, "Bad Request", typeof(string))]
-        [SwaggerResponse(401, "Unauthorized", null)]
+        [SwaggerResponse(200, "Success")]
+        [SwaggerResponse(500, "Internal Server Error")]
+        [SwaggerResponse(400, "Bad Request")]
+        [SwaggerResponse(401, "Unauthorized")]
         public IActionResult ListAllEmployee()
         {
             try
@@ -100,9 +100,9 @@ namespace Backend_TeaTech.Controllers
         /// </remarks>
         [HttpDelete("{id}")]
         [SwaggerResponse(200, "Success")]
-        [SwaggerResponse(400, "Bad Request", typeof(string))]
-        [SwaggerResponse(404, "Not Found", typeof(string))]
-        [SwaggerResponse(500, "Internal Server Error", typeof(string))]
+        [SwaggerResponse(400, "Bad Request")]
+        [SwaggerResponse(404, "Not Found")]
+        [SwaggerResponse(500, "Internal Server Error")]
         public IActionResult DeleteEmployee(Guid id)
         {
             try
@@ -131,10 +131,10 @@ namespace Backend_TeaTech.Controllers
         /// Retrieves an employee by its ID.
         /// </remarks>
         [HttpGet("{id}")]
-        [SwaggerResponse(200, "Success", typeof(Employee))]
-        [SwaggerResponse(400, "Bad Request", typeof(string))]
-        [SwaggerResponse(404, "Not Found", typeof(string))]
-        [SwaggerResponse(500, "Internal Server Error", typeof(string))]
+        [SwaggerResponse(200, "Success")]
+        [SwaggerResponse(400, "Bad Request")]
+        [SwaggerResponse(404, "Not Found")]
+        [SwaggerResponse(500, "Internal Server Error")]
         public IActionResult GetEmployeeById(Guid id)
         {
             try

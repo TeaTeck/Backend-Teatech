@@ -27,9 +27,9 @@ namespace Backend_TeaTech.Controllers
         /// </remarks>
         [Authorize(Roles = "Employee:Coordinator")]
         [HttpGet("list")]
-        [SwaggerResponse(200, "Success", typeof(List<User>))]
-        [SwaggerResponse(401, "Unauthorized", typeof(string))]
-        [SwaggerResponse(500, "Internal Server Error", typeof(string))]
+        [SwaggerResponse(200, "Success")]
+        [SwaggerResponse(401, "Unauthorized")]
+        [SwaggerResponse(500, "Internal Server Error")]
         public IActionResult ListAllUser()
         {
             try
@@ -54,9 +54,9 @@ namespace Backend_TeaTech.Controllers
         /// Logs a user into the system.
         /// </remarks>
         [HttpPost("login")]
-        [SwaggerResponse(200, "Success", typeof(string))]
-        [SwaggerResponse(400, "Bad Request", typeof(string))]
-        [SwaggerResponse(401, "Unauthorized", typeof(string))]
+        [SwaggerResponse(200, "Success")]
+        [SwaggerResponse(400, "Bad Request")]
+        [SwaggerResponse(401, "Unauthorized")]
         public IActionResult Login([FromBody] UserRequestDTO req)
         {
             try
@@ -93,9 +93,9 @@ namespace Backend_TeaTech.Controllers
         [Authorize(Roles = "Employee:Coordinator")]
         [HttpDelete("{id}")]
         [SwaggerResponse(200, "Success")]
-        [SwaggerResponse(400, "Bad Request", typeof(string))]
-        [SwaggerResponse(404, "Not Found", typeof(string))]
-        [SwaggerResponse(500, "Internal Server Error", typeof(string))]
+        [SwaggerResponse(400, "Bad Request")]
+        [SwaggerResponse(404, "Not Found")]
+        [SwaggerResponse(500, "Internal Server Error")]
         public IActionResult DeleteUser(Guid id)
         {
             try
@@ -125,10 +125,10 @@ namespace Backend_TeaTech.Controllers
         /// </remarks>
         [Authorize]
         [HttpGet("{id}")]
-        [SwaggerResponse(200, "Success", typeof(User))]
-        [SwaggerResponse(401, "Unauthorized", typeof(string))]
-        [SwaggerResponse(404, "Not Found", typeof(string))]
-        [SwaggerResponse(500, "Internal Server Error", typeof(string))]
+        [SwaggerResponse(200, "Success")]
+        [SwaggerResponse(401, "Unauthorized")]
+        [SwaggerResponse(404, "Not Found")]
+        [SwaggerResponse(500, "Internal Server Error")]
         public IActionResult GetUserById(Guid id)
         {
             try

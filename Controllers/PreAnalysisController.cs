@@ -29,9 +29,9 @@ namespace Backend_TeaTech.Controllers
         [Authorize(Roles = "Employee:Coordinator")]
         [HttpPut("update/{idPreAnalysis}")]
         [SwaggerResponse(200, "Success")]
-        [SwaggerResponse(400, "Bad Request", typeof(string))]
-        [SwaggerResponse(401, "Unauthorized", typeof(string))]
-        [SwaggerResponse(500, "Internal Server Error", typeof(string))]
+        [SwaggerResponse(400, "Bad Request")]
+        [SwaggerResponse(401, "Unauthorized")]
+        [SwaggerResponse(500, "Internal Server Error")]
         public IActionResult Update(Guid idPreAnalysis, [FromBody] PreAnalysisRequestDTO req)
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -58,9 +58,9 @@ namespace Backend_TeaTech.Controllers
         /// </remarks>
         [Authorize(Policy = "CoordinatorOrApplicator")]
         [HttpGet("list")]
-        [SwaggerResponse(200, "Success", typeof(List<PreAnalysis>))]
-        [SwaggerResponse(401, "Unauthorized", typeof(string))]
-        [SwaggerResponse(500, "Internal Server Error", typeof(string))]
+        [SwaggerResponse(200, "Success")]
+        [SwaggerResponse(401, "Unauthorized")]
+        [SwaggerResponse(500, "Internal Server Error")]
         public IActionResult ListAllPreAnalysis()
         {
             try
@@ -87,9 +87,9 @@ namespace Backend_TeaTech.Controllers
         [Authorize(Roles = "Employee:Coordinator")]
         [HttpDelete("{id}")]
         [SwaggerResponse(200, "Success")]
-        [SwaggerResponse(400, "Bad Request", typeof(string))]
-        [SwaggerResponse(404, "Not Found", typeof(string))]
-        [SwaggerResponse(500, "Internal Server Error", typeof(string))]
+        [SwaggerResponse(400, "Bad Request")]
+        [SwaggerResponse(404, "Not Found")]
+        [SwaggerResponse(500, "Internal Server Error")]
         public IActionResult DeletePreAnalysis(Guid id)
         {
             try
@@ -115,10 +115,10 @@ namespace Backend_TeaTech.Controllers
         /// </remarks>
         [Authorize(Policy = "CoordinatorOrApplicator")]
         [HttpGet("{id}")]
-        [SwaggerResponse(200, "Success", typeof(PreAnalysis))]
-        [SwaggerResponse(400, "Bad Request", typeof(string))]
-        [SwaggerResponse(404, "Not Found", typeof(string))]
-        [SwaggerResponse(500, "Internal Server Error", typeof(string))]
+        [SwaggerResponse(200, "Success")]
+        [SwaggerResponse(400, "Bad Request")]
+        [SwaggerResponse(404, "Not Found")]
+        [SwaggerResponse(500, "Internal Server Error")]
         public IActionResult GetPreAnalysisById(Guid id)
         {
             try

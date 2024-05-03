@@ -17,13 +17,15 @@ namespace Backend_TeaTech.Controllers
         private readonly IChildAssistedService _childAssistedService;
         private readonly IResponsibleService _responsibleService;
         private readonly IPreAnalysisService _preAnalysisService;
+        private readonly IAssessmentService _assessmentService;
 
-        public ChildAssistedController(IUserService userService, IChildAssistedService childAssistedService, IResponsibleService responsibleService, IPreAnalysisService preAnalysisService)
+        public ChildAssistedController(IUserService userService, IChildAssistedService childAssistedService, IResponsibleService responsibleService, IPreAnalysisService preAnalysisService, IAssessmentService assessmentService)
         {
             _userService = userService;
             _childAssistedService = childAssistedService;
             _responsibleService = responsibleService;
             _preAnalysisService = preAnalysisService;
+            _assessmentService = assessmentService;
 
         }
 
@@ -36,8 +38,8 @@ namespace Backend_TeaTech.Controllers
         [Authorize(Roles = "Employee:Coordinator")]
         [HttpPost("add")]
         [SwaggerResponse(200, "Success")]
-        [SwaggerResponse(400, "Bad Request", null)]
-        [SwaggerResponse(401, "Unauthorized", null)]
+        [SwaggerResponse(400, "Bad Request")]
+        [SwaggerResponse(401, "Unauthorized")]
         public IActionResult Add([FromBody] ChildAssistedRequestDTO req)
         {
             try
@@ -53,6 +55,9 @@ namespace Backend_TeaTech.Controllers
 
                 PreAnalysis preAnalysis = new PreAnalysis(childAssited);
                 preAnalysis = _preAnalysisService.CreatePreAnalysis(preAnalysis);
+
+                Assessment assessment = new Assessment(childAssited);
+                assessment = _assessmentService.CreateAssessment(assessment);
 
                 return Ok();
             }
@@ -79,10 +84,10 @@ namespace Backend_TeaTech.Controllers
         ///   </remarks>
         [Authorize(Policy = "CoordinatorOrApplicator")]
         [HttpGet("filterByData")]  
-        [SwaggerResponse(200, "Success", typeof(string))]
-        [SwaggerResponse(400, "Bad Request", null)]
-        [SwaggerResponse(401, "Unauthorized", null)]
-        [SwaggerResponse(500, "Internal Server Error", null)]
+        [SwaggerResponse(200, "Success")]
+        [SwaggerResponse(400, "Bad Request")]
+        [SwaggerResponse(401, "Unauthorized")]
+        [SwaggerResponse(500, "Internal Server Error")]
         public IActionResult FilterByData(string data = "", int pageNumber = 1, int pageSize = 10, string orderBy = "Name", string orderDirection = "asc")
         {
             try
@@ -112,11 +117,11 @@ namespace Backend_TeaTech.Controllers
         /// </remarks>
         [Authorize(Roles = "Employee:Coordinator")]
         [HttpDelete("{id}")]
-        [SwaggerResponse(200, "Success", typeof(string))]
-        [SwaggerResponse(400, "Bad Request", null)]
-        [SwaggerResponse(401, "Unauthorized", null)]
-        [SwaggerResponse(404, "Not Found", null)]
-        [SwaggerResponse(500, "Internal Server Error", null)]
+        [SwaggerResponse(200, "Success")]
+        [SwaggerResponse(400, "Bad Request")]
+        [SwaggerResponse(401, "Unauthorized")]
+        [SwaggerResponse(404, "Not Found")]
+        [SwaggerResponse(500, "Internal Server Error")]
         public IActionResult DeleteChild(Guid id)
         {
             try
@@ -146,11 +151,11 @@ namespace Backend_TeaTech.Controllers
         /// </remarks>
         [Authorize]
         [HttpGet("{id}")]
-        [SwaggerResponse(200, "Success", typeof(ChildAssisted))]
-        [SwaggerResponse(400, "Bad Request", null)]
-        [SwaggerResponse(401, "Unauthorized", null)]
-        [SwaggerResponse(404, "Not Found", null)]
-        [SwaggerResponse(500, "Internal Server Error", null)]
+        [SwaggerResponse(200, "Success")]
+        [SwaggerResponse(400, "Bad Request")]
+        [SwaggerResponse(401, "Unauthorized")]
+        [SwaggerResponse(404, "Not Found")]
+        [SwaggerResponse(500, "Internal Server Error")]
         public IActionResult GetChildById(Guid id)
         {
             try

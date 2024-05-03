@@ -51,7 +51,7 @@ namespace Backend_TeaTech.Services
                 preAnalysisUpdate.Protocol = preAnalysis.Protocol;
             }
 
-            Employee employee = _employeeRepository.GetByID(employeeId);
+            Employee employee = _employeeRepository.GetByIdUser(employeeId);
 
             if (employee == null)
             {

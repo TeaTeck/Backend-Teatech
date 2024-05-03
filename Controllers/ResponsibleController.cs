@@ -27,9 +27,9 @@ namespace Backend_TeaTech.Controllers
         /// </remarks>
         [Authorize(Policy = "CoordinatorOrApplicator")]
         [HttpGet("list")]
-        [SwaggerResponse(200, "Success", typeof(List<Responsible>))]
-        [SwaggerResponse(401, "Unauthorized", typeof(string))]
-        [SwaggerResponse(500, "Internal Server Error", typeof(string))]
+        [SwaggerResponse(200, "Success")]
+        [SwaggerResponse(401, "Unauthorized")]
+        [SwaggerResponse(500, "Internal Server Error")]
         public IActionResult ListAllResponsible()
         {
             try
@@ -56,9 +56,9 @@ namespace Backend_TeaTech.Controllers
         [Authorize(Roles = "Employee:Coordinator")]
         [HttpDelete("{id}")]
         [SwaggerResponse(200, "Success")]
-        [SwaggerResponse(400, "Bad Request", typeof(string))]
-        [SwaggerResponse(404, "Not Found", typeof(string))]
-        [SwaggerResponse(500, "Internal Server Error", typeof(string))]
+        [SwaggerResponse(400, "Bad Request")]
+        [SwaggerResponse(404, "Not Found")]
+        [SwaggerResponse(500, "Internal Server Error")]
         public IActionResult DeleteResponsible(Guid id)
         {
             try
@@ -89,9 +89,9 @@ namespace Backend_TeaTech.Controllers
         [Authorize(Roles = "CoordinatorOrResponsible")]
         [HttpPut("update/{id}")]
         [SwaggerResponse(200, "Success")]
-        [SwaggerResponse(400, "Bad Request", typeof(string))]
-        [SwaggerResponse(404, "Not Found", typeof(string))]
-        [SwaggerResponse(500, "Internal Server Error", typeof(string))]
+        [SwaggerResponse(400, "Bad Request")]
+        [SwaggerResponse(404, "Not Found")]
+        [SwaggerResponse(500, "Internal Server Error")]
         public IActionResult PutResponsible(Guid id, [FromBody] ResponsibleRequestDTO req)
         {
             try
@@ -121,10 +121,10 @@ namespace Backend_TeaTech.Controllers
         /// </remarks>
         [Authorize]
         [HttpGet("{id}")]
-        [SwaggerResponse(200, "Success", typeof(Responsible))]
-        [SwaggerResponse(400, "Bad Request", typeof(string))]
-        [SwaggerResponse(404, "Not Found", typeof(string))]
-        [SwaggerResponse(500, "Internal Server Error", typeof(string))]
+        [SwaggerResponse(200, "Success")]
+        [SwaggerResponse(400, "Bad Request")]
+        [SwaggerResponse(404, "Not Found")]
+        [SwaggerResponse(500, "Internal Server Error")]
         public IActionResult GetResponsibleById(Guid id)
         {
             try
