@@ -38,6 +38,8 @@ builder.Services.AddTransient<IPreAnalysisService, PreAnalysisService>();
 builder.Services.TryAddScoped<IJwtService, JwtService>();
 builder.Services.AddTransient<IAssessmentService, AssessmentService>();
 builder.Services.AddTransient<IAssessmentRepository, AssessmentRepository>();
+builder.Services.AddTransient<IProgramAssistedService, ProgramAssistedService>();
+builder.Services.AddTransient<IProgramAssistedRepository, ProgramAssistedRepository>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

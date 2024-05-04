@@ -1,4 +1,5 @@
-﻿using Backend_TeaTech.Models;
+﻿using Backend_TeaTech.Enum;
+using Backend_TeaTech.Models;
 
 namespace Backend_TeaTech.Interfaces.Repositories
 {

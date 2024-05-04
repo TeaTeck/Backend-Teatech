@@ -14,6 +14,6 @@ namespace Backend_TeaTech.Infrastructure
         public DbSet<Employee> Employees { get; set; }
         public DbSet<PreAnalysis> PreAnalysiss { get; set; }
         public DbSet<Assessment> Assessments { get; set; }  
-
+        public DbSet<ProgramAssisted> Programs { get; set;}
     } 
 }

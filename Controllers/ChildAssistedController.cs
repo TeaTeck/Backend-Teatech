@@ -18,14 +18,16 @@ namespace Backend_TeaTech.Controllers
         private readonly IResponsibleService _responsibleService;
         private readonly IPreAnalysisService _preAnalysisService;
         private readonly IAssessmentService _assessmentService;
+        private readonly IProgramAssistedService _programAssistedService;
 
-        public ChildAssistedController(IUserService userService, IChildAssistedService childAssistedService, IResponsibleService responsibleService, IPreAnalysisService preAnalysisService, IAssessmentService assessmentService)
+        public ChildAssistedController(IUserService userService, IChildAssistedService childAssistedService, IResponsibleService responsibleService, IPreAnalysisService preAnalysisService, IAssessmentService assessmentService, IProgramAssistedService programAssistedService)
         {
             _userService = userService;
             _childAssistedService = childAssistedService;
             _responsibleService = responsibleService;
             _preAnalysisService = preAnalysisService;
             _assessmentService = assessmentService;
+            _programAssistedService = programAssistedService;
 
         }
 
@@ -58,6 +60,9 @@ namespace Backend_TeaTech.Controllers
 
                 Assessment assessment = new Assessment(childAssited);
                 assessment = _assessmentService.CreateAssessment(assessment);
+
+                ProgramAssisted programAssisted = new ProgramAssisted(childAssited);
+                programAssisted = _programAssistedService.CreateProgram(programAssisted);
 
                 return Ok();
             }

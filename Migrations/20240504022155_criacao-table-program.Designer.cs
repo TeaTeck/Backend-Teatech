@@ -3,6 +3,7 @@ using System;
 using Backend_TeaTech.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Backend_TeaTech.Migrations
 {
     [DbContext(typeof(ConnectionContext))]
-    partial class ConnectionContextModelSnapshot : ModelSnapshot
+    [Migration("20240504022155_criacao-table-program")]
+    partial class criacaotableprogram
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -192,16 +195,17 @@ namespace Backend_TeaTech.Migrations
                         .HasColumnName("id");
 
                     b.Property<string>("ActivityDescription")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)")
                         .HasColumnName("activity_description");
 
-                    b.Property<int?>("ProgramType")
+                    b.Property<int>("ProgramType")
                         .HasMaxLength(20)
                         .HasColumnType("integer")
                         .HasColumnName("program_type");
 
-                    b.Property<int?>("ProtocolType")
+                    b.Property<int>("ProtocolType")
                         .HasMaxLength(20)
                         .HasColumnType("integer")
                         .HasColumnName("protocol_type");
@@ -212,6 +216,7 @@ namespace Backend_TeaTech.Migrations
                         .HasColumnName("status_code");
 
                     b.Property<string>("StimuliUsed")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)")
                         .HasColumnName("stimuli_used");

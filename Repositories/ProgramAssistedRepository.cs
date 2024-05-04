@@ -1,27 +1,25 @@
-﻿using Backend_TeaTech.Interfaces.Repositories;
-using Microsoft.EntityFrameworkCore;
-using Backend_TeaTech.Infrastructure;
+﻿using Backend_TeaTech.Infrastructure;
+using Backend_TeaTech.Interfaces.Repositories;
 using Backend_TeaTech.Models;
-using Backend_TeaTech.Enum;
+using Microsoft.EntityFrameworkCore;
 
 namespace Backend_TeaTech.Repositories
 {
-    public class EmployeeRepository : IEmployeeRepository
+    public class ProgramAssistedRepository : IProgramAssistedRepository
     {
         private readonly ConnectionContext _connectionContext;
 
-        public EmployeeRepository(ConnectionContext context)
+        public ProgramAssistedRepository(ConnectionContext context)
         {
             _connectionContext = context;
         }
-
-        public Employee Add(Employee employee)
+        public ProgramAssisted Add(ProgramAssisted programAssisted)
         {
             try
             {
-                var employeeAdd = _connectionContext.Employees.Add(employee).Entity;
+                var programAssistedAdd = _connectionContext.Programs.Add(programAssisted).Entity;
                 _connectionContext.SaveChanges();
-                return employeeAdd;
+                return programAssistedAdd;
             }
             catch (Exception ex)
             {
@@ -29,16 +27,16 @@ namespace Backend_TeaTech.Repositories
             }
         }
 
-        public void DeleteByID(Guid id)
+        public void DeleteById(Guid id)
         {
             try
             {
-                Employee? employee = this.GetByID(id);
-                if (employee != null)
+                ProgramAssisted? programAssisted = this.GetById(id);
+                if (programAssisted != null)
                 {
                     try
                     {
-                        _connectionContext.Employees.Remove(employee);
+                        _connectionContext.Programs.Remove(programAssisted);
                         _connectionContext.SaveChanges();
                     }
                     catch (Exception ex)
@@ -49,7 +47,7 @@ namespace Backend_TeaTech.Repositories
                 }
                 else
                 {
-                    throw new Exception("Employee was not found");
+                    throw new Exception("Program was not found");
                 }
             }
             catch (Exception ex)
@@ -58,11 +56,15 @@ namespace Backend_TeaTech.Repositories
             }
         }
 
-        public List<Employee> GetAll()
+        public List<ProgramAssisted> GetAll()
         {
             try
             {
-                return _connectionContext.Employees.Include(e => e.User).ToList();
+                return _connectionContext.Programs.Include(p => p.Employee)
+                                                      .Include(p => p.ChildAssisted)
+                                                      .Include(p => p.ChildAssisted.Responsible)
+                                                      .Include(p => p.ChildAssisted.Responsible.User)
+                                                      .ToList();
             }
             catch (Exception ex)
             {
@@ -70,17 +72,23 @@ namespace Backend_TeaTech.Repositories
             }
         }
 
-        public Employee GetByID(Guid id)
+        public ProgramAssisted? GetByChildAssistedId(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ProgramAssisted GetById(Guid id)
         {
             try
             {
                 try
                 {
-                    Employee? employee = _connectionContext.Employees.Include(e => e.User)
-                                                                     .FirstOrDefault(c => c.Id.Equals(id));
-                    if (employee != null)
+                    ProgramAssisted? programAssisted = _connectionContext.Programs.Include(p => p.Employee.User)
+                                                                              .Include(p => p.ChildAssisted.Responsible.User)
+                                                                              .FirstOrDefault(c => c.Id.Equals(id));
+                    if (programAssisted != null)
                     {
-                        return employee;
+                        return programAssisted;
                     }
                     else
                     {
@@ -99,45 +107,17 @@ namespace Backend_TeaTech.Repositories
             }
         }
 
-        public Employee GetByIdUser(Guid id)
+        public ProgramAssisted Update(ProgramAssisted programAssisted)
         {
             try
             {
-                try
-                {
-                    Employee? employee = _connectionContext.Employees.FirstOrDefault(c => c.User.Id == id);
-                    if (employee != null)
-                    {
-                        return employee;
-                    }
-                    else
-                    {
-                        return null;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception("Internal database error - Message: " + ex.Message);
-                }
-
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
-
-        public Employee Update(Employee employee)
-        {
-            try
-            {
-                if (this.GetByID(employee.Id) != null)
+                if (this.GetById(programAssisted.Id) != null)
                 {
                     try
                     {
-                        Employee employeeUpdated = _connectionContext.Employees.Update(employee).Entity;
+                        ProgramAssisted programAssistedUpdate = _connectionContext.Programs.Update(programAssisted).Entity;
                         _connectionContext.SaveChanges();
-                        return employeeUpdated;
+                        return programAssistedUpdate;
                     }
                     catch (Exception ex)
                     {
@@ -147,7 +127,7 @@ namespace Backend_TeaTech.Repositories
                 }
                 else
                 {
-                    throw new Exception("Employee was not found");
+                    throw new Exception("Program was not found");
                 }
             }
             catch (Exception ex)
