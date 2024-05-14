@@ -9,5 +9,6 @@ namespace Backend_TeaTech.Interfaces.Repositories
         void DeleteById(Guid id);
         Responsible? GetById(Guid id);
         Responsible Update(Responsible responsible);
+        Responsible GetByIdUser(Guid id);
     }
 }

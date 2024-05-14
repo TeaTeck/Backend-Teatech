@@ -168,5 +168,18 @@ namespace Backend_TeaTech.Repositories
                 throw new Exception("Data not found.", ex);
             }
         }
+
+        public ChildAssisted GetChildByResponsibleId(Guid responsibleId)
+        {
+            try
+            {
+                return _connectionContext.ChildAssisteds.FirstOrDefault(c => c.Responsible.Id == responsibleId);
+
+            }catch (Exception ex)
+            {
+                throw new Exception("Internal database error - Message: " + ex.Message);
+            }
+            
+        }
     }
 }

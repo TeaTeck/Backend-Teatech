@@ -98,6 +98,34 @@ namespace Backend_TeaTech.Repositories
             }
         }
 
+        public Responsible GetByIdUser(Guid id)
+        {
+            try
+            {
+                try
+                {
+                    Responsible? responsible = _connectionContext.Responsibles.FirstOrDefault(c => c.User.Id == id);
+                    if (responsible != null)
+                    {
+                        return responsible;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Internal database error - Message: " + ex.Message);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public Responsible Update(Responsible responsible)
         {
             try

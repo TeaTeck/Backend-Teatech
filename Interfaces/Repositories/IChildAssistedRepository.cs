@@ -11,5 +11,6 @@ namespace Backend_TeaTech.Interfaces.Repositories
         ChildAssisted Update(ChildAssisted childAssisted);
         int CountAllChildAssisted();
         List<ChildAssisted> GetByData(string data, int pageNumber, int pageSize, string orderBy, string orderDirection);
+        ChildAssisted GetChildByResponsibleId(Guid responsibleId);
     }
 }

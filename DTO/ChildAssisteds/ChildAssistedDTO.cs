@@ -10,6 +10,10 @@ namespace Backend_TeaTech.DTO.ChildAssisteds
         public string? Name { get; set; }
         public string? Email { get; set; }
         public string? Contact { get; set; }
+        public string? Photo { get; set; }
+        public DateTime? BirthDate { get; set; }
+        public string? NameResponsible { get; set; }
+        public string? CpfResponsible { get; set; }
         public Guid? PreAnalysisId { get; set; }
         public StatusCode? PreAnalysisStatusCode { get; set; }
 
@@ -17,12 +21,16 @@ namespace Backend_TeaTech.DTO.ChildAssisteds
         {
         }
 
-        public ChildAssistedDTO(ChildAssisted childAssisted, PreAnalysis? preAnalysis)
+        public ChildAssistedDTO(ChildAssisted childAssisted, PreAnalysis? preAnalysis, Responsible responsible)
         {
             Id = childAssisted?.Id;
             Name = childAssisted?.Name;
             Email = childAssisted?.Responsible?.User?.Email;
             Contact = childAssisted?.Responsible?.ContactOne;
+            Photo = childAssisted?.Photo;
+            BirthDate = childAssisted?.BirthDate;
+            NameResponsible = responsible?.NameResponsibleOne;
+            CpfResponsible = responsible?.ResponsibleCpfOne;
             PreAnalysisId = preAnalysis?.Id;
             PreAnalysisStatusCode = preAnalysis?.StatusCode;
         }

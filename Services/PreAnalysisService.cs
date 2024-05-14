@@ -157,7 +157,7 @@ namespace Backend_TeaTech.Services
                 Protocol = preAnalysis.Protocol,
                 StatusCode = preAnalysis.StatusCode,
                 Employee = preAnalysis.Employee != null ? new EmployeeDTO(preAnalysis.Employee) : null,
-                ChildAssisted = preAnalysis.ChildAssisted != null ? new ChildAssistedDTO(preAnalysis.ChildAssisted, preAnalysis) : null,
+                ChildAssisted = preAnalysis.ChildAssisted != null ? new ChildAssistedDTO(preAnalysis.ChildAssisted, preAnalysis, preAnalysis.ChildAssisted.Responsible) : null,
 
             }).ToList();
 

@@ -44,7 +44,7 @@ namespace Backend_TeaTech.Services
 
             childs.ForEach(child => {
                 PreAnalysis? preAnalysis = _preAnalysisRepository.GetByChildAssistedId(child.Id);
-                childAssistedDTOs.Add(new ChildAssistedDTO(child, preAnalysis));
+                childAssistedDTOs.Add(new ChildAssistedDTO(child, preAnalysis, child.Responsible));
             });
 
             int totalChildAssisteds = _childAssistedRepository.CountAllChildAssisted();
@@ -68,7 +68,7 @@ namespace Backend_TeaTech.Services
 
                 PreAnalysis? preAnalysis = _preAnalysisRepository.GetByChildAssistedId(childAssisted.Id);
 
-                var childAssistedDTO = new ChildAssistedDTO(childAssisted, preAnalysis);
+                var childAssistedDTO = new ChildAssistedDTO(childAssisted, preAnalysis, childAssisted.Responsible);
 
                 return childAssistedDTO;
             }

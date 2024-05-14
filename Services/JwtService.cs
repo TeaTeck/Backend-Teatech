@@ -14,24 +14,39 @@ namespace Backend_TeaTech.Services
     {
         private readonly IConfiguration _configuration;
         private readonly IEmployeeRepository _employeeRepository;
-        public JwtService(IConfiguration configuration, IEmployeeRepository employeeRepository)
+        private readonly IChildAssistedRepository _childAssistedRepository;
+        private readonly IResponsibleRepository _responsibleRepository;
+        public JwtService(IConfiguration configuration, IEmployeeRepository employeeRepository, IChildAssistedRepository childAssistedRepository, IResponsibleRepository responsibleRepository)
         {
             _configuration = configuration;
             _employeeRepository = employeeRepository;
+            _childAssistedRepository = childAssistedRepository;
+            _responsibleRepository = responsibleRepository;
         }
 
         public string GenerateToken(User user)
         {
             string role = string.Empty;
-            if(user.UserType == Enum.UserType.Employee) {
+            Guid childId = Guid.Empty;
+            List<Claim> claims = [new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())];
+            if (user.UserType == Enum.UserType.Employee) {
 
                 Employee employee = _employeeRepository.GetByIdUser(user.Id);
                 role = $"{Enum.UserType.Employee.ToString()}:{employee.OccupationType.ToString()}";
+                claims.Add(new Claim(ClaimTypes.Role, role));
 
             }
             else if(user.UserType == Enum.UserType.Responsible)
             {
-                role = Enum.UserType.Responsible.ToString();
+                Responsible responsible = _responsibleRepository.GetByIdUser(user.Id);
+                ChildAssisted childAssisted = _childAssistedRepository.GetChildByResponsibleId(responsible.Id);
+                if (childAssisted != null)
+                {
+                    childId = childAssisted.Id;
+                    role = Enum.UserType.Responsible.ToString();
+                    claims.Add(new Claim("ChildId", childId.ToString()));
+                    claims.Add(new Claim(ClaimTypes.Role, role));
+                }              
             }
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:SecretKey"] ?? string.Empty));
@@ -43,11 +58,7 @@ namespace Backend_TeaTech.Services
             var tokenDescriptor = new JwtSecurityToken(
                 issuer: issuer,
                 audience: audience,
-                claims: new[]
-                {
-                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                    new Claim(ClaimTypes.Role, role)
-                },
+                claims: claims,
                 expires: DateTime.UtcNow.AddDays(1),
                 signingCredentials: signingCredentials
             );
