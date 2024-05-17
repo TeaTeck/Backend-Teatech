@@ -11,6 +11,7 @@ namespace Backend_TeaTech.Interfaces.Repositories
         Employee GetByID(Guid id);
         List<Employee> GetAll();
         Employee GetByIdUser(Guid id);
+        List<Employee> GetAllApplicatores();
 
     }
 }

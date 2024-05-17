@@ -70,6 +70,21 @@ namespace Backend_TeaTech.Repositories
             }
         }
 
+        public List<Employee> GetAllApplicatores()
+        {
+            try
+            {
+                return _connectionContext.Employees
+                                         .Where(e => e.OccupationType == OccupationType.Applicator)
+                                         .Include(e => e.User)
+                                         .ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Internal database error - Message: " + ex.Message, ex);
+            }
+        }
+
         public Employee GetByID(Guid id)
         {
             try

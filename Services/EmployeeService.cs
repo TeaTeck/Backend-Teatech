@@ -88,5 +88,19 @@ namespace Backend_TeaTech.Services
             return employeeDTO;
 
         }
+
+        public List<EmployeeApplicatoresDTO> ListAllEmployeeApplicatores()
+        {
+            var employeesApplicatores = _employeeRepository.GetAllApplicatores();
+
+            List<EmployeeApplicatoresDTO> employeeDTO = employeesApplicatores.Select(employee => new EmployeeApplicatoresDTO
+            {
+                Id = employee.Id,
+                Name = employee.Name,
+
+            }).ToList();
+
+            return employeeDTO;
+        }
     }
 }

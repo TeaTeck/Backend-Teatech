@@ -93,6 +93,38 @@ namespace Backend_TeaTech.Controllers
         }
 
         /// <summary>
+        /// List all employees applicatores.
+        /// </summary>
+        /// <remarks>
+        /// Retrieves a list of all employees applicatores.
+        /// </remarks>
+        [HttpGet("listApplicatores")]
+        [SwaggerResponse(200, "Success")]
+        [SwaggerResponse(500, "Internal Server Error")]
+        [SwaggerResponse(400, "Bad Request")]
+        [SwaggerResponse(401, "Unauthorized")]
+        public IActionResult ListAllEmployeeApplicatores()
+        {
+            try
+            {
+                var employees = _employeeService.ListAllEmployeeApplicatores();
+                return Ok(new { message = "List retrieved successfully", employees });
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred while retrieving the list of employees applicatores: {ex.Message}");
+            }
+        }
+
+        /// <summary>
         /// Delete an employee.
         /// </summary>
         /// <remarks>

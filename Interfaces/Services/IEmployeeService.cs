@@ -9,6 +9,6 @@ namespace Backend_TeaTech.Interfaces.Services
         void DeleteEmployeeById(Guid id);
         List<EmployeeDTO> ListAllEmployee();
         EmployeeDTO GetEmployeeById(Guid id);
-
+        List<EmployeeApplicatoresDTO> ListAllEmployeeApplicatores();
     }
 }
