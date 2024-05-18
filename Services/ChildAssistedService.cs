@@ -11,10 +11,12 @@ namespace Backend_TeaTech.Services
     {
         private readonly IChildAssistedRepository _childAssistedRepository;
         private readonly IPreAnalysisRepository _preAnalysisRepository;
-        public ChildAssistedService(IChildAssistedRepository childAssistedRepository, IPreAnalysisRepository preAnalysisRepository)
+        private readonly IAssessmentRepository _assessmentRepository;
+        public ChildAssistedService(IChildAssistedRepository childAssistedRepository, IPreAnalysisRepository preAnalysisRepository, IAssessmentRepository assessmentRepository)
         {
             _childAssistedRepository = childAssistedRepository;
             _preAnalysisRepository = preAnalysisRepository;
+            _assessmentRepository = assessmentRepository;
         }
         public ChildAssisted CreateChild(ChildAssisted childAssisted)
         {
@@ -40,18 +42,18 @@ namespace Backend_TeaTech.Services
         {
             var childs = _childAssistedRepository.GetByData(data, pageNumber, pageSize, orderBy, orderDirection);
 
-            List<ChildAssistedDTO> childAssistedDTOs = new List<ChildAssistedDTO>();
+            List<FilterChildAssistedDTO> filterchildAssistedDTOs = new List<FilterChildAssistedDTO>();
 
             childs.ForEach(child => {
                 PreAnalysis? preAnalysis = _preAnalysisRepository.GetByChildAssistedId(child.Id);
-                childAssistedDTOs.Add(new ChildAssistedDTO(child, preAnalysis, child.Responsible));
+                filterchildAssistedDTOs.Add(new FilterChildAssistedDTO(child, preAnalysis, child.Responsible));
             });
 
             int totalChildAssisteds = _childAssistedRepository.CountAllChildAssisted();
 
             int totalPages = (int)Math.Ceiling((double)totalChildAssisteds / pageSize);
 
-            ListChildAssistedDTO listChildAssistedDTO = new ListChildAssistedDTO(childAssistedDTOs, totalPages, pageNumber);
+            ListChildAssistedDTO listChildAssistedDTO = new ListChildAssistedDTO(filterchildAssistedDTOs, totalPages, pageNumber);
 
             return listChildAssistedDTO;
         }
@@ -60,15 +62,16 @@ namespace Backend_TeaTech.Services
         {
             try
             {
-                var childAssisted = _childAssistedRepository.GetById(id);
+                 var childAssisted = _childAssistedRepository.GetById(id);
                 if (childAssisted == null)
                 {
                     throw new ArgumentException($"Child with ID {id} not found.");
                 }
 
                 PreAnalysis? preAnalysis = _preAnalysisRepository.GetByChildAssistedId(childAssisted.Id);
+                Assessment? assessment = _assessmentRepository.GetByChildAssistedId(childAssisted.Id);
 
-                var childAssistedDTO = new ChildAssistedDTO(childAssisted, preAnalysis, childAssisted.Responsible);
+                var childAssistedDTO = new ChildAssistedDTO(childAssisted, preAnalysis, childAssisted.Responsible, assessment);
 
                 return childAssistedDTO;
             }

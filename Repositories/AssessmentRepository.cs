@@ -74,7 +74,30 @@ namespace Backend_TeaTech.Repositories
 
         public Assessment? GetByChildAssistedId(Guid id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Assessment? assessment = _connectionContext.Assessments.FirstOrDefault(a => a.ChildAssisted.Id == id);
+                if (assessment != null)
+                {
+                    try
+                    {
+                        return assessment;
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception("Internal database error - Message: " + ex.Message);
+                    }
+
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         public Assessment GetById(Guid id)

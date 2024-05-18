@@ -5,6 +5,7 @@ using Backend_TeaTech.DTO.Users;
 using Backend_TeaTech.Interfaces.Repositories;
 using Backend_TeaTech.Interfaces.Services;
 using Backend_TeaTech.Models;
+using Backend_TeaTech.Repositories;
 
 namespace Backend_TeaTech.Services
 {
@@ -12,6 +13,7 @@ namespace Backend_TeaTech.Services
     {
         private readonly IPreAnalysisRepository _preAnalysisRepository;
         private readonly IEmployeeRepository _employeeRepository;
+        private readonly IAssessmentRepository _assessmentRepository;
         public PreAnalysisService(IPreAnalysisRepository preAnalysisRepository, IEmployeeRepository employeeRepository)
         {
             _preAnalysisRepository = preAnalysisRepository;
@@ -146,24 +148,29 @@ namespace Backend_TeaTech.Services
 
         public List<PreAnalysisDTO> ListAllPreAnalysis()
         {
-            var preAnalysiss = _preAnalysisRepository.GetAll();
-
-            List<PreAnalysisDTO> preAnalysisDTO = preAnalysiss.Select(preAnalysis => new PreAnalysisDTO
-            {
-                Id = preAnalysis.Id,
-                ProposedActivity = preAnalysis.ProposedActivity,
-                FinalDuration = preAnalysis.FinalDuration,
-                IdentifiedSkills = preAnalysis.IdentifiedSkills,
-                Protocol = preAnalysis.Protocol,
-                StatusCode = preAnalysis.StatusCode,
-                Employee = preAnalysis.Employee != null ? new EmployeeDTO(preAnalysis.Employee) : null,
-                ChildAssisted = preAnalysis.ChildAssisted != null ? new ChildAssistedDTO(preAnalysis.ChildAssisted, preAnalysis, preAnalysis.ChildAssisted.Responsible) : null,
-
-            }).ToList();
-
-            return preAnalysisDTO;
+            throw new NotImplementedException();
         }
 
-       
+        //public List<PreAnalysisDTO> ListAllPreAnalysis()
+        //{
+        //    var preAnalysiss = _preAnalysisRepository.GetAll();
+
+        //    List<PreAnalysisDTO> preAnalysisDTO = preAnalysiss.Select(preAnalysis => new PreAnalysisDTO
+        //    {
+        //        Id = preAnalysis.Id,
+        //        ProposedActivity = preAnalysis.ProposedActivity,
+        //        FinalDuration = preAnalysis.FinalDuration,
+        //        IdentifiedSkills = preAnalysis.IdentifiedSkills,
+        //        Protocol = preAnalysis.Protocol,
+        //        StatusCode = preAnalysis.StatusCode,
+        //        Employee = preAnalysis.Employee != null ? new EmployeeDTO(preAnalysis.Employee) : null,
+        //        ChildAssisted = preAnalysis.ChildAssisted != null ? new ChildAssistedDTO(preAnalysis.ChildAssisted, preAnalysis, preAnalysis.ChildAssisted.Responsible) : null,
+
+        //    }).ToList();
+
+        //    return preAnalysisDTO;
+        //}
+
+
     }
 }

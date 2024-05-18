@@ -4,15 +4,15 @@
     {
         public int TotalPages { get; set; }
         public int PageNumber { get; set; }
-        public List<ChildAssistedDTO> ChildAssisteds { get; set; } = new List<ChildAssistedDTO>();
+        public List<FilterChildAssistedDTO> FilterChildAssisteds { get; set; } = new List<FilterChildAssistedDTO>();
 
         public ListChildAssistedDTO()
         {
 
         }
-        public ListChildAssistedDTO(List<ChildAssistedDTO> childAssisteds, int totalPages, int pageNumber)
+        public ListChildAssistedDTO(List<FilterChildAssistedDTO> filterChildAssisteds, int totalPages, int pageNumber)
         {
-            ChildAssisteds = childAssisteds;
+            FilterChildAssisteds = filterChildAssisteds;
             TotalPages = totalPages;    
             PageNumber = pageNumber;    
         }

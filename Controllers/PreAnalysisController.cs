@@ -50,33 +50,33 @@ namespace Backend_TeaTech.Controllers
             }
         }
 
-        /// <summary>
-        /// List all pre-analyses.
-        /// </summary>
-        /// <remarks>
-        /// Retrieves a list of all pre-analyses.
-        /// </remarks>
-        [Authorize(Policy = "CoordinatorOrApplicator")]
-        [HttpGet("list")]
-        [SwaggerResponse(200, "Success")]
-        [SwaggerResponse(401, "Unauthorized")]
-        [SwaggerResponse(500, "Internal Server Error")]
-        public IActionResult ListAllPreAnalysis()
-        {
-            try
-            {
-                var preAnalyses = _preAnalysisService.ListAllPreAnalysis();
-                return Ok(new { message = "List retrieved successfully", preAnalyses });
-            }
-            catch (UnauthorizedAccessException)
-            {
-                return Unauthorized("You are not authorized to perform this action.");
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"An error occurred while retrieving the list of pre-analyses: {ex.Message}");
-            }
-        }
+        ///// <summary>
+        ///// List all pre-analyses.
+        ///// </summary>
+        ///// <remarks>
+        ///// Retrieves a list of all pre-analyses.
+        ///// </remarks>
+        //[Authorize(Policy = "CoordinatorOrApplicator")]
+        //[HttpGet("list")]
+        //[SwaggerResponse(200, "Success")]
+        //[SwaggerResponse(401, "Unauthorized")]
+        //[SwaggerResponse(500, "Internal Server Error")]
+        //public IActionResult ListAllPreAnalysis()
+        //{
+        //    try
+        //    {
+        //        var preAnalyses = _preAnalysisService.ListAllPreAnalysis();
+        //        return Ok(new { message = "List retrieved successfully", preAnalyses });
+        //    }
+        //    catch (UnauthorizedAccessException)
+        //    {
+        //        return Unauthorized("You are not authorized to perform this action.");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(500, $"An error occurred while retrieving the list of pre-analyses: {ex.Message}");
+        //    }
+        //}
 
         /// <summary>
         /// Delete a pre-analysis
