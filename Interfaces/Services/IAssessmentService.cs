@@ -7,5 +7,6 @@ namespace Backend_TeaTech.Interfaces.Services
     {
         Assessment CreateAssessment(Assessment assessment);
         Assessment UpdateAssessment(Guid id, AssessmentRequestDTO assessment, Guid employeeId);
+        AssessmentDTO GetAssessmentById(Guid id);
     }
 }

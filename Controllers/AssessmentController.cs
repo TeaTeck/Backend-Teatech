@@ -48,5 +48,37 @@ namespace Backend_TeaTech.Controllers
                 return StatusCode(500, $"An error occurred while updating the pre-analysis: {ex.Message}");
             }
         }
+
+        /// <summary>
+        /// Get an assessment by ID.
+        /// </summary>
+        /// <remarks>
+        /// Retrieves an assessment by its ID.
+        /// </remarks>
+        [HttpGet("{id}")]
+        [SwaggerResponse(200, "Success")]
+        [SwaggerResponse(400, "Bad Request")]
+        [SwaggerResponse(404, "Not Found")]
+        [SwaggerResponse(500, "Internal Server Error")]
+        public IActionResult GetAssessmentByChildId(Guid id)
+        {
+            try
+            {
+                var assessment = _assessmentService.GetAssessmentById(id);
+                if (assessment == null)
+                {
+                    return NotFound("Assessment not found.");
+                }
+                return Ok(assessment);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred while processing the request: {ex.Message}");
+            }
+        }
     }
 }

@@ -100,7 +100,7 @@ namespace Backend_TeaTech.Services
                 {
                     Id = preAnalysis.ChildAssisted.Id,
                     Name = preAnalysis.ChildAssisted.Name,
-                    Contact = preAnalysis.ChildAssisted.Responsible.ContactOne,
+                    ContactOne = preAnalysis.ChildAssisted.Responsible.ContactOne,
                     Email = preAnalysis.ChildAssisted.Responsible.User.Email,
                     PreAnalysisId = preAnalysis.ChildAssisted.Id,
                     PreAnalysisStatusCode = preAnalysis.StatusCode,

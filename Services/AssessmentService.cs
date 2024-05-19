@@ -1,4 +1,6 @@
 ﻿using Backend_TeaTech.DTO.Assessments;
+using Backend_TeaTech.DTO.Employees;
+using Backend_TeaTech.DTO.Users;
 using Backend_TeaTech.Interfaces.Repositories;
 using Backend_TeaTech.Interfaces.Services;
 using Backend_TeaTech.Models;
@@ -19,6 +21,35 @@ namespace Backend_TeaTech.Services
         {
             Assessment assessmentAdd = _assessmentRepository.Add(assessment);
             return assessmentAdd;
+        }
+
+        public AssessmentDTO GetAssessmentById(Guid id)
+        {
+            try
+            {
+                var assessment = _assessmentRepository.GetByChildAssistedId(id);
+                if (assessment == null)
+                {
+                    throw new ArgumentException($"Assessment with ID {id} not found.");
+                }
+
+                var assessmentDTO = new AssessmentDTO
+                {
+                    Id = assessment.Id,
+                    ChildAssessment = assessment.ChildAssessment,
+
+                };
+
+                return assessmentDTO;
+            }
+            catch (ArgumentException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error while getting assessment by ID", ex);
+            }
         }
 
         public Assessment UpdateAssessment(Guid id, AssessmentRequestDTO assessment, Guid employeeId)

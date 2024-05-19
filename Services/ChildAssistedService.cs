@@ -71,7 +71,7 @@ namespace Backend_TeaTech.Services
                 PreAnalysis? preAnalysis = _preAnalysisRepository.GetByChildAssistedId(childAssisted.Id);
                 Assessment? assessment = _assessmentRepository.GetByChildAssistedId(childAssisted.Id);
 
-                var childAssistedDTO = new ChildAssistedDTO(childAssisted, preAnalysis, childAssisted.Responsible, assessment);
+                var childAssistedDTO = new ChildAssistedDTO(childAssisted, preAnalysis, childAssisted.Responsible, assessment, childAssisted.Responsible.User);
 
                 return childAssistedDTO;
             }
