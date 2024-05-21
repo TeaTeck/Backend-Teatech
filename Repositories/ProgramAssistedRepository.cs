@@ -74,7 +74,30 @@ namespace Backend_TeaTech.Repositories
 
         public ProgramAssisted? GetByChildAssistedId(Guid id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                ProgramAssisted? program = _connectionContext.Programs.FirstOrDefault(p => p.ChildAssisted.Id == id);
+                if (program != null)
+                {
+                    try
+                    {
+                        return program;
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception("Internal database error - Message: " + ex.Message);
+                    }
+
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         public ProgramAssisted GetById(Guid id)

@@ -12,11 +12,13 @@ namespace Backend_TeaTech.Services
         private readonly IChildAssistedRepository _childAssistedRepository;
         private readonly IPreAnalysisRepository _preAnalysisRepository;
         private readonly IAssessmentRepository _assessmentRepository;
-        public ChildAssistedService(IChildAssistedRepository childAssistedRepository, IPreAnalysisRepository preAnalysisRepository, IAssessmentRepository assessmentRepository)
+        private readonly IProgramAssistedRepository _programAssistedRepository;
+        public ChildAssistedService(IChildAssistedRepository childAssistedRepository, IPreAnalysisRepository preAnalysisRepository, IAssessmentRepository assessmentRepository, IProgramAssistedRepository programAssistedRepository)
         {
             _childAssistedRepository = childAssistedRepository;
             _preAnalysisRepository = preAnalysisRepository;
             _assessmentRepository = assessmentRepository;
+            _programAssistedRepository = programAssistedRepository;
         }
         public ChildAssisted CreateChild(ChildAssisted childAssisted)
         {
@@ -70,8 +72,9 @@ namespace Backend_TeaTech.Services
 
                 PreAnalysis? preAnalysis = _preAnalysisRepository.GetByChildAssistedId(childAssisted.Id);
                 Assessment? assessment = _assessmentRepository.GetByChildAssistedId(childAssisted.Id);
+                ProgramAssisted? program = _programAssistedRepository.GetByChildAssistedId(childAssisted.Id);
 
-                var childAssistedDTO = new ChildAssistedDTO(childAssisted, preAnalysis, childAssisted.Responsible, assessment, childAssisted.Responsible.User);
+                var childAssistedDTO = new ChildAssistedDTO(childAssisted, preAnalysis, childAssisted.Responsible, assessment, childAssisted.Responsible.User, program);
 
                 return childAssistedDTO;
             }

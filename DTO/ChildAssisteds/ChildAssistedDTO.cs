@@ -33,13 +33,14 @@ namespace Backend_TeaTech.DTO.ChildAssisteds
             public UserType UserType { get; set; }
             public Guid? AssessmentId { get; set; }
             public Guid? PreAnalysisId { get; set; }
+            public Guid? ProgramId { get; set; }
             public StatusCode? PreAnalysisStatusCode { get; set; }
 
         public ChildAssistedDTO()
         {
         }
 
-        public ChildAssistedDTO(ChildAssisted childAssisted, PreAnalysis? preAnalysis, Responsible? responsible, Assessment? assessment, User user)
+        public ChildAssistedDTO(ChildAssisted childAssisted, PreAnalysis? preAnalysis, Responsible? responsible, Assessment? assessment, User user, ProgramAssisted programAssisted)
         {
             Id = childAssisted?.Id;
             Name = childAssisted?.Name;
@@ -73,6 +74,8 @@ namespace Backend_TeaTech.DTO.ChildAssisteds
         
             AssessmentId = assessment?.Id;
             ChildAssessment = assessment?.ChildAssessment;
+
+            ProgramId = programAssisted?.Id;
         }
 
         public ChildAssistedDTO(Guid? id, string? name)
