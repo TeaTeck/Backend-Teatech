@@ -21,4 +21,4 @@ packages/
 
 # Cache e arquivos temporários do Visual Studio
 *.userprefs
-/appsettings.json
+
